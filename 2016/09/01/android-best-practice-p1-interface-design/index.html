@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android开发最佳实践——1.接口设计 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Android">
+  <meta name="description" content="一个好的接口设计可以给前后端减少无数的麻烦并让大家都感受到 coding 的快乐，本文就讲讲我认为的好的接口设计是怎样的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发最佳实践——1.接口设计">
+<meta property="og:url" content="http://loshine.me/2016/09/01/android-best-practice-p1-interface-design/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="一个好的接口设计可以给前后端减少无数的麻烦并让大家都感受到 coding 的快乐，本文就讲讲我认为的好的接口设计是怎样的。">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发最佳实践——1.接口设计">
+<meta name="twitter:description" content="一个好的接口设计可以给前后端减少无数的麻烦并让大家都感受到 coding 的快乐，本文就讲讲我认为的好的接口设计是怎样的。">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发最佳实践——1.接口设计</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Android开发最佳实践——1.接口设计</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2016-09-01T01:51:21.000Z" itemprop="datePublished" class="page-time">
+  2016-09-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-android-best-practice-p1-interface-design" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#设计"><span class="post-toc-number">1.</span> <span class="post-toc-text">设计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#协议"><span class="post-toc-number">2.</span> <span class="post-toc-text">协议</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#域名"><span class="post-toc-number">3.</span> <span class="post-toc-text">域名</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#版本"><span class="post-toc-number">4.</span> <span class="post-toc-text">版本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#路径和资源"><span class="post-toc-number">5.</span> <span class="post-toc-text">路径和资源</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HTTP-动词"><span class="post-toc-number">6.</span> <span class="post-toc-text">HTTP 动词</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Query-查询"><span class="post-toc-number">7.</span> <span class="post-toc-text">Query 查询</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#全局信息"><span class="post-toc-number">8.</span> <span class="post-toc-text">全局信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#传输数据"><span class="post-toc-number">9.</span> <span class="post-toc-text">传输数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Request"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">Request</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Response"><span class="post-toc-number">9.2.</span> <span class="post-toc-text">Response</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安全"><span class="post-toc-number">10.</span> <span class="post-toc-text">安全</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#避免空指针"><span class="post-toc-number">11.</span> <span class="post-toc-text">避免空指针</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">12.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一个项目刚开始的时候，最需要确认的就是接口设计了：数据如何传递，使用什么格式什么协议乃至如何保证安全性。如果一个项目的接口设计不合理——比如没有考虑到安全性，后期为了增加安全验证又要对部分 API 推倒重做，那么前端（泛指 Android、iOS 以及 Web）就必须对整个项目进行改动，甚至可能导致之前发布的版本无法使用的囧事。</p>
+<p>那么本文就谈谈我认为的一个好的接口应该是如何设计的。</p>
+<h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>使用 RESTful 风格的 API 设计。</p>
+<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>使用 HTTPS 协议，保证 HTTP 的方便的同时保证一定的安全性。</p>
+<h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><p>尽量部署在专属域名下，如 github：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://api.github.com/</div></pre></td></tr></table></figure>
+<h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>应该把版本号放到 URL 中，如 API 有改版的时候，应保证老版的 API 持续提供服务一段时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://api.example.com/v1/</div></pre></td></tr></table></figure>
+<h1 id="路径和资源"><a href="#路径和资源" class="headerlink" title="路径和资源"></a>路径和资源</h1><p>在 Restful 风格的 API 中，每个路径都代表着互联网中的一个资源。所以 URL 地址中应该使用名词，并且因为大多是资源集合，所以应该使用复数形式。如果是有从属关系的资源，应该服从从属关系，下面给出几个例子：`</p>
+<ul>
+<li><code>https://api.example.com/v1/posts</code></li>
+<li><code>https://api.example.com/v1/posts/{postId}</code></li>
+<li><code>https://api.example.com/v1/posts/{postId}/comments</code></li>
+</ul>
+<h1 id="HTTP-动词"><a href="#HTTP-动词" class="headerlink" title="HTTP 动词"></a>HTTP 动词</h1><p>HTTP 动词可以完美对应数据库的增删查改操作，于是我们就把 HTTP 动词和我们的增删查改操作对应起来：</p>
+<ul>
+<li>GET：查询数据</li>
+<li>POST：增加数据</li>
+<li>PUT：更新数据(客户端提供改变后的完整资源)</li>
+<li>PATCH：更新数据(客户端更新某几条属性)</li>
+<li>DELETE：删除数据</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>下面是结合 HTTP 动词和路径提供一些示例：</p>
+<ul>
+<li>GET <code>/posts</code> ：获取所有文章</li>
+<li>POST <code>/posts</code> ：创建一篇文章</li>
+<li>GET <code>/posts/{postId}</code> ：获取指定 Id 的文章信息</li>
+<li>PUT <code>/posts/{postId}</code> ：修改指定 Id 的文章信息(客户端需要提供全部属性)</li>
+<li>PATCH <code>/post/{postId}</code> ：修改指定 Id 的文章信息(客户端提供需要修改的部分属性)</li>
+<li>DELETE <code>/post/{postId}</code> ：删除指定 Id 的文章</li>
+<li>GET <code>/posts/{postId}/comments</code> ：获取指定 Id 文章的所有评论</li>
+<li>POST <code>/posts/{postId}/comments</code> ：在指定 Id 文章下创建一条评论</li>
+</ul>
+<h1 id="Query-查询"><a href="#Query-查询" class="headerlink" title="Query 查询"></a>Query 查询</h1><p>在 GET 查询的时候我们不可能一次性获取所有资源，那么我们需要提供一些查询条件。</p>
+<p>下面是一些常用的查询：</p>
+<ul>
+<li><p><code>?index=2&amp;size=20</code> ：第二页每页20条</p>
+</li>
+<li><p><code>?sortby=name&amp;order=asc</code> ：按指定规则与顺序排序</p>
+<p>……</p>
+</li>
+</ul>
+<h1 id="全局信息"><a href="#全局信息" class="headerlink" title="全局信息"></a>全局信息</h1><p>全局通用信息应该放在请求头里，避免使用 Query 拼接，如：</p>
+<ul>
+<li>APPID（Android/iOS/H5）</li>
+<li>APPVER（版本号）</li>
+<li>CHANNEL（渠道号）</li>
+<li>APP-BUILD-NUM（内部小版本号）</li>
+<li>TOKEN</li>
+<li>NETWORK（网络环境）</li>
+<li>LANGUAGE（语言）</li>
+</ul>
+<p>等</p>
+<h1 id="传输数据"><a href="#传输数据" class="headerlink" title="传输数据"></a>传输数据</h1><h2 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h2><p>使用 json 格式传输数据，如果需要上传文件则使用表单的形式提交。</p>
+<h2 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h2><p>使用 json 格式传输数据，<code>Content-Type</code>一致设定为<code>application/json</code>。</p>
+<p>响应格式应该统一，下面给出一个例子：</p>
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>code</td>
+<td>int</td>
+<td>状态码</td>
+</tr>
+<tr>
+<td>message</td>
+<td>String</td>
+<td>状态信息</td>
+</tr>
+<tr>
+<td>data</td>
+<td>List or Object</td>
+<td>数据</td>
+</tr>
+<tr>
+<td>time</td>
+<td>long</td>
+<td>时间戳</td>
+</tr>
+</tbody>
+</table>
+<p>具体的响应如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  'code': 0,</div><div class="line">  'message': '获取成功',</div><div class="line">  'data': [&#123;&#125;, &#123;&#125;, &#123;&#125;], // 返回一个集合</div><div class="line">  'time': 1472435695000</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或者返回某一个数据：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  'code': 0,</div><div class="line">  'message': '获取成功',</div><div class="line">  'data': &#123;&#125;, // 返回一个对象</div><div class="line">  'time': 1472435695000</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h1><p>为了保证客户端与服务端通信的安全，我们使用 HTTPS 协议。</p>
+<p>在身份认证上使用 Oauth 2.0 协议，用户登录之后在客户端保存一份 token，避免在客户端持久化存储用户名和密码。之后每次访问需要身份认证的 API 时，必须携带 token 访问。</p>
+<h1 id="避免空指针"><a href="#避免空指针" class="headerlink" title="避免空指针"></a>避免空指针</h1><p>API 设计的时候应该合理帮助前端避免空指针异常，在一些字段或者属性为空的时候应该返回默认值：如 String 返回<code>&quot;&quot;</code>, int 返回<code>0</code>, Object 返回 <code>{}</code>, Array or List 返回 <code>[]</code>。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://blog.zhaiyifan.cn/2016/07/23/android-new-project-from-0-p9/" target="_blank" rel="external">从零开始的Android新项目9 - 前端用后台接口设计</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="external">RESTful API 设计指南</a></li>
+</ul>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2016/09/01/android-best-practice-p1-interface-design/" target="_blank" rel="external">http://loshine.me/2016/09/01/android-best-practice-p1-interface-design/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2016/08/25/a-universal-solution-of-recyclerview-adapter-notify/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">RecyclerView.Adapter：全能notify解决方案</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Jekyll在Github-Pages上搭建个人博客 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="jekyll,github,github-pages">
+  <meta name="description" content="我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Jekyll在Github-Pages上搭建个人博客">
+<meta property="og:url" content="http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Jekyll在Github-Pages上搭建个人博客">
+<meta name="twitter:description" content="我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用Jekyll在Github-Pages上搭建个人博客</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">使用Jekyll在Github-Pages上搭建个人博客</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2015-08-17T02:12:30.000Z" itemprop="datePublished" class="page-time">
+  2015-08-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-build-personal-blog-in-github-pages-with-jekyll" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github-pages/">github-pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jekyll/">jekyll</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开始"><span class="post-toc-number">1.</span> <span class="post-toc-text">开始</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#新建一个仓库"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">新建一个仓库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#clone到本地"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">clone到本地</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#上传页面"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">上传页面</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#build"><span class="post-toc-number">2.</span> <span class="post-toc-text">建造</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建本地环境"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">搭建本地环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll的使用"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Jekyll的使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll目录解析"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Jekyll目录解析</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#write blog"><span class="post-toc-number">3.</span> <span class="post-toc-text">写博客</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#装修"><span class="post-toc-number">4.</span> <span class="post-toc-text">装修</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用模板"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">使用模板</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义样式"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">自定义样式</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定制"><span class="post-toc-number">5.</span> <span class="post-toc-text">定制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用独立域名"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">使用独立域名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加评论功能"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">添加评论功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多说"><span class="post-toc-number">5.2.1.</span> <span class="post-toc-text">多说</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Disqus"><span class="post-toc-number">5.2.2.</span> <span class="post-toc-text">Disqus</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了<a href="http://azureyu.com/blog/2015/08/15/HowToBulidBlog.html" target="_blank" rel="external">《“授人以渔”的教你搭建个人独立博客》——Azure Yu</a>、<a href="https://help.github.com/articles/using-jekyll-with-pages/" target="_blank" rel="external">《Using Jekyll with Pages》</a>。鄙人于此也作一下<strong>使用Jekyll在Github-Pages上搭建个人博客</strong>的总结，也可以给其他后来者做一些参考。</p>
+<p>本文默认读者已经拥有了Github的帐号，并且对Git的使用较为熟练。如果对Git以及Github不是很了解，可以参考<a href="http://www.imooc.com/learn/390" target="_blank" rel="external">《版本控制入门 – 搬进 Github》</a>。</p>
+<p>在这个过程中可能需要使用到少许的Ruby知识，如果您需要学习，可以看<a href="http://saito.im/slide/ruby-new.html" target="_blank" rel="external">这里</a></p>
+</blockquote>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="新建一个仓库"><a href="#新建一个仓库" class="headerlink" title="新建一个仓库"></a>新建一个仓库</h2><ul>
+<li>如果没有Github帐号，首先<a href="https://github.com/" target="_blank" rel="external">注册一个</a>。</li>
+<li>接下来新建一个仓库</li>
+</ul>
+<p><strong>注：</strong>Repository name(仓库名)必须是 <code>yourusername.github.io</code></p>
+<p>比如我的用户名是loshine，那么我的这个仓库名就是<code>loshine.github.io</code></p>
+<h2 id="clone到本地"><a href="#clone到本地" class="headerlink" title="clone到本地"></a>clone到本地</h2><p>使用Github客户端或者Git命令行工具将这个项目clone到本地。</p>
+<h2 id="上传页面"><a href="#上传页面" class="headerlink" title="上传页面"></a>上传页面</h2><p>之后，新建一个<code>index.html</code>文件，push到对应的<strong>master</strong>分支（推荐官网教程）。等一段时间之后（可以听首歌），网站生效，访问<code>yourusername.github.io</code>，就能看见完整的网页了。</p>
+<h1 id="build">建造</h1>
+
+<h2 id="搭建本地环境"><a href="#搭建本地环境" class="headerlink" title="搭建本地环境"></a>搭建本地环境</h2><p>由于我们使用Jekell来将markdown文件生成博客文章，所以我们需要搭建本地的Jekyll环境。</p>
+<ol>
+<li><strong>Ruby</strong> - Mac已经自带了Ruby，所以无需再次安装。如果是其它系统且没有安装Ruby，请<a href="https://www.ruby-lang.org/en/downloads/" target="_blank" rel="external">安装Ruby环境</a>。</li>
+<li><strong>Bundler</strong> - 打开终端输入<code>gem install bundler</code>以安装。</li>
+<li><strong>github-pages</strong> - 打开终端输入<code>gem install github-pages</code>以安装。</li>
+<li><strong>Jekyll</strong> - 打开终端输入<code>gem install jekyll</code>以安装。</li>
+</ol>
+<p><strong>注</strong>: 如果你在墙内则可能会出现无法安装的问题，可以通过将Gem源更换为<a href="http://ruby.taobao.org/" target="_blank" rel="external">淘宝镜像源</a>解决。</p>
+<h2 id="Jekyll的使用"><a href="#Jekyll的使用" class="headerlink" title="Jekyll的使用"></a>Jekyll的使用</h2><ol>
+<li>在我们之前创建的仓库下新建一个文件，命名为<strong>Gemfile</strong>，并写入<code>gem &#39;github-pages&#39;</code>。</li>
+<li>在仓库目录下打开命令行工具，输入<code>bundle install</code>。</li>
+<li>在命令行工具中输入<code>bundle exec jekyll serve</code>，按提示打开地址，就可以在本地进行查看和调试网站了。</li>
+</ol>
+<h2 id="Jekyll目录解析"><a href="#Jekyll目录解析" class="headerlink" title="Jekyll目录解析"></a>Jekyll目录解析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">|—— _config.yml</div><div class="line">|—— _includes</div><div class="line">    |—— footer.html</div><div class="line">    |—— header.html</div><div class="line">|—— _layouts</div><div class="line">    |—— default.html</div><div class="line">    |—— post.html</div><div class="line">|—— _posts</div><div class="line">    |—— 2015-04-09-welcome-to-jekyll.md</div><div class="line">    |—— 2015-08-17-使用Jekyll在Github-Pages上搭建个人博客.md</div><div class="line">|—— _site</div><div class="line">|—— css</div><div class="line">    |—— *.css</div><div class="line">|—— script</div><div class="line">    |—— *.js</div><div class="line">|—— Gemfile</div><div class="line">|—— Gemfile.lock</div><div class="line">|—— index.html</div></pre></td></tr></table></figure>
+<p>接下来按顺序介绍一下以上文件目录树的每一个文件夹以及文件的作用。</p>
+<ul>
+<li><code>_config.yml</code> 配置文件，你可以在里面配置你博客会用到的常量，比如博客名，邮件</li>
+<li><code>_includes</code> 文章各个部分的html文件，可以在布局中包含这些文件</li>
+<li><code>_layouts</code> 存放模板。就是你网页的布局，主页布局，文章布局。当然不是指CSS那样的布局，是指，你包含哪些基本的内容到页面上。包含的内容就是includes里面的文件。</li>
+<li><code>_posts</code> 存放博客文章</li>
+<li><code>CNAME</code> 域名地址</li>
+<li><code>css</code> 存放博客所用css</li>
+<li><code>script</code> 存放博客所用JavaScript</li>
+<li><code>index.html</code> 博客主页<h1 id="write blog">写博客</h1>
+
+</li>
+</ul>
+<p>博客文章都是用<a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">markdown格式</a>书写，命名格式为<em>时间加标题</em>，形如：<code>2015-08-17-使用Jekyll在Github-Pages上搭建个人博客.md</code></p>
+<p>文章需要在开头位置加入一段特殊的文字，其中定义了使用到的<strong>样式</strong>、<strong>文章标题</strong>、<strong>时间</strong>、<strong>分类</strong>。</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">layout: post</div><div class="line">title: "Welcome to Jekyll!"</div><div class="line">date: 2014-01-27 21:57:11</div><div class="line"><span class="section">categories: Blog</span></div><div class="line">---</div></pre></td></tr></table></figure>
+<p>完成了以上的步骤，就可以开始撰写博客了。写完之后记得把它放入<code>_post</code>文件夹中，并同步到Github上哦。</p>
+<h1 id="装修"><a href="#装修" class="headerlink" title="装修"></a>装修</h1><h2 id="使用模板"><a href="#使用模板" class="headerlink" title="使用模板"></a>使用模板</h2><p>之前在<a href="#jekyll dictionary">Jekyll目录解析</a>中我们大致了解了各个目录的结构。如果您是一名资深的前端工程师，那么就可以直接开始编写自己喜欢的样式的博客了。如果您对于前端并不是那么擅长，那么您可以直接在<a href="http://jekyllthemes.org/" target="_blank" rel="external">Jekyll 主题</a>中选择自己喜欢的主题并放入到自己的项目中去。</p>
+<p>以我的博客为例，我选择了<a href="http://jekyllthemes.org/themes/pithy/" target="_blank" rel="external">Pithy</a>主题，将其下载了下来，然后放入了自己的项目中，覆盖已有的文件，然后在终端中输入<code>bundle exec jekyll serve</code>运行jekyll服务器，打开<code>http://localhost:4000</code>就可以查看到效果了。</p>
+<h2 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a>自定义样式</h2><p>如果您不是一名资深的前端工程师但是还是想要自己定义自己博客的样式。那么我推荐您<a href="http://www.runoob.com/" target="_blank" rel="external">Run Noob</a>、<a href="http://www.w3school.com.cn/" target="_blank" rel="external">w3cschool</a>这两个地方学习前端知识。之后您就可以根据自己的需求装点自己的博客了。</p>
+<h1 id="定制"><a href="#定制" class="headerlink" title="定制"></a>定制</h1><h2 id="使用独立域名"><a href="#使用独立域名" class="headerlink" title="使用独立域名"></a>使用独立域名</h2><ul>
+<li>新建一个文件，命名为<strong>CNAME</strong>，然后在里面写入你需要绑定的独立域名就可以了。</li>
+<li>在你的域名服务商处添加解析地址。</li>
+</ul>
+<p>完成以上步骤你就可以使用自己的独立域名了。</p>
+<h2 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h2><h3 id="多说"><a href="#多说" class="headerlink" title="多说"></a>多说</h3><p>多说评论对国内的社交帐号支持不错，自定义性也很强，是一个不错的选择。</p>
+<ul>
+<li>登录<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>，创建一个项目，拷贝你的<strong>通用代码</strong>。</li>
+<li>在<code>_include</code>文件夹里新建一个<code>comment.html</code>文件，将通用代码粘贴进去。</li>
+<li>修改<strong>通用代码</strong>中需要配置的地方</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span> <span class="attr">data-thread-key</span>=<span class="string">"请将此处替换成文章在你的站点中的ID"</span></span></div><div class="line">    <span class="attr">data-title</span>=<span class="string">"请替换成文章的标题"</span> <span class="attr">data-url</span>=<span class="string">"请替换成文章的网址"</span>&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span> <span class="attr">data-thread-key</span>=<span class="string">"【 page.id 】"</span></span></div><div class="line">    <span class="attr">data-title</span>=<span class="string">"【 page.title 】"</span> <span class="attr">data-url</span>=<span class="string">"your web site【 page.url 】"</span>&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>注意<code>【】</code>需要替换为<strong>两个大括号</strong>，<code>your web site</code>需替换为<strong>您的域名地址</strong>。</p>
+<ul>
+<li>在<code>_layout</code>中的<code>post.html</code>中的底部加入<code>【% include comment.html %】</code>（【】须替换为{}）</li>
+<li>在<strong>多说</strong>的控制台里你可以设置很多自定义项，如：评论审核、评论显示方式、关键词过滤、主题、自定义CSS等</li>
+</ul>
+<h3 id="Disqus"><a href="#Disqus" class="headerlink" title="Disqus"></a>Disqus</h3><p>Disqus支持使用Disqus、Facebook、Twitter以及Google帐号登录，如果你的博客不是主要面向国内普通用户的话，可以考虑使用Disqus。</p>
+<ul>
+<li><a href="https://disqus.com/" target="_blank" rel="external">注册Disqus</a></li>
+<li>右上角设置项中选择<code>Add Disqus To Site</code>，按步骤走，最后复制生成的<strong>Universal Code</strong></li>
+<li>其它部分类似如上的集成多说操作，<em>但不需要自己修改代码了</em></li>
+<li>Disqus也有控制台可以对评论进行操作</li>
+</ul>
+<p><strong>注意</strong>：Disqus在国内的访问速度可能比较慢，可能需要慎重考虑使用。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://azureyu.com/blog/2015/08/15/HowToBulidBlog.html" target="_blank" rel="external">《“授人以渔”的教你搭建个人独立博客》——Azure Yu</a></li>
+<li><a href="https://help.github.com/categories/github-pages-basics/" target="_blank" rel="external">官方文档</a></li>
+</ul>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/" target="_blank" rel="external">http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/08/18/singleton-in-java/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Java中的单例设计模式</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
