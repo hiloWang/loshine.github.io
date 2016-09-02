@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2016/09/01/android-best-practice-p1-interface-design/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="一个好的接口设计可以给前后端减少无数的麻烦并让大家都感受到 coding 的快乐，本文就讲讲我认为的好的接口设计是怎样的。">
-<meta property="og:updated_time" content="2016-09-01T15:17:09.000Z">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发最佳实践——1.接口设计">
 <meta name="twitter:description" content="一个好的接口设计可以给前后端减少无数的麻烦并让大家都感受到 coding 的快乐，本文就讲讲我认为的好的接口设计是怎样的。">
@@ -38,10 +38,10 @@
   </a>
   <div class="brand-wrap">
     <div class="brand">
-      <a href="/" class="avatar"><img src="/img/logo.jpg"></a>
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
       <hgroup class="introduce">
         <h5 class="nickname">Loshine</h5>
-        <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
       </hgroup>
     </div>
   </div>
@@ -51,7 +51,7 @@
           <li class="waves-block waves-effect">
             <a href="/"  >
               <i class="icon icon-lg icon-home"></i>
-              主页
+              Home
             </a>
           </li>
       
@@ -70,14 +70,14 @@
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="https://github.com/yscoder" target="_blank" >
+            <a href="https://github.com/loshine" target="_blank" >
               <i class="icon icon-lg icon-github"></i>
               Github
             </a>
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="http://www.weibo.com/ysweb" target="_blank" >
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
               <i class="icon icon-lg icon-weibo"></i>
               Weibo
             </a>
@@ -157,7 +157,7 @@
 
             
             <nav class="post-toc-wrap" id="post-toc">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#设计"><span class="post-toc-text">设计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#协议"><span class="post-toc-text">协议</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#域名"><span class="post-toc-text">域名</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#版本"><span class="post-toc-text">版本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#路径和资源"><span class="post-toc-text">路径和资源</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HTTP-动词"><span class="post-toc-text">HTTP 动词</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例"><span class="post-toc-text">示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Query-查询"><span class="post-toc-text">Query 查询</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#全局信息"><span class="post-toc-text">全局信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#传输数据"><span class="post-toc-text">传输数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Request"><span class="post-toc-text">Request</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Response"><span class="post-toc-text">Response</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安全"><span class="post-toc-text">安全</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#避免空指针"><span class="post-toc-text">避免空指针</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#设计"><span class="post-toc-number">1.</span> <span class="post-toc-text">设计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#协议"><span class="post-toc-number">2.</span> <span class="post-toc-text">协议</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#域名"><span class="post-toc-number">3.</span> <span class="post-toc-text">域名</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#版本"><span class="post-toc-number">4.</span> <span class="post-toc-text">版本</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#路径和资源"><span class="post-toc-number">5.</span> <span class="post-toc-text">路径和资源</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HTTP-动词"><span class="post-toc-number">6.</span> <span class="post-toc-text">HTTP 动词</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Query-查询"><span class="post-toc-number">7.</span> <span class="post-toc-text">Query 查询</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#全局信息"><span class="post-toc-number">8.</span> <span class="post-toc-text">全局信息</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#传输数据"><span class="post-toc-number">9.</span> <span class="post-toc-text">传输数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Request"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">Request</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Response"><span class="post-toc-number">9.2.</span> <span class="post-toc-text">Response</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安全"><span class="post-toc-number">10.</span> <span class="post-toc-text">安全</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#避免空指针"><span class="post-toc-number">11.</span> <span class="post-toc-text">避免空指针</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">12.</span> <span class="post-toc-text">参考</span></a></li></ol>
             </nav>
             
         </aside>

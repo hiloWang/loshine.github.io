@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2016/03/01/delegated-properties-in-kotlin/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="Kotlin 是 Jetbrain 推出的一门运行在 JVM 上的语言，它结合了面向对象以及函数式语言的特性，超甜的语法糖以及来自知名 IDE 大厂 Jetbrain 的出身让它初一面世就广受瞩目，特别是在 Android 开发社区中。它相比起 Java 拥有了许许多多的优秀特性，并且几乎每一个新特性都对应解决了 Java 开发时的痛苦之处，本篇文章主要讲解 Kotlin 中的委托属性这一特性。">
-<meta property="og:updated_time" content="2016-09-01T15:17:09.000Z">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin中的委托属性">
 <meta name="twitter:description" content="Kotlin 是 Jetbrain 推出的一门运行在 JVM 上的语言，它结合了面向对象以及函数式语言的特性，超甜的语法糖以及来自知名 IDE 大厂 Jetbrain 的出身让它初一面世就广受瞩目，特别是在 Android 开发社区中。它相比起 Java 拥有了许许多多的优秀特性，并且几乎每一个新特性都对应解决了 Java 开发时的痛苦之处，本篇文章主要讲解 Kotlin 中的委托属性这一特性。">
@@ -38,10 +38,10 @@
   </a>
   <div class="brand-wrap">
     <div class="brand">
-      <a href="/" class="avatar"><img src="/img/logo.jpg"></a>
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
       <hgroup class="introduce">
         <h5 class="nickname">Loshine</h5>
-        <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
       </hgroup>
     </div>
   </div>
@@ -51,7 +51,7 @@
           <li class="waves-block waves-effect">
             <a href="/"  >
               <i class="icon icon-lg icon-home"></i>
-              主页
+              Home
             </a>
           </li>
       
@@ -70,14 +70,14 @@
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="https://github.com/yscoder" target="_blank" >
+            <a href="https://github.com/loshine" target="_blank" >
               <i class="icon icon-lg icon-github"></i>
               Github
             </a>
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="http://www.weibo.com/ysweb" target="_blank" >
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
               <i class="icon icon-lg icon-weibo"></i>
               Weibo
             </a>
@@ -157,7 +157,7 @@
 
             
             <nav class="post-toc-wrap" id="post-toc">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#委托属性-Delegated-Properties"><span class="post-toc-text">委托属性(Delegated Properties)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何使用"><span class="post-toc-text">如何使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义一个委托"><span class="post-toc-text">定义一个委托</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用定义好的委托属性"><span class="post-toc-text">使用定义好的委托属性</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实例讲解"><span class="post-toc-text">实例讲解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lazy-懒加载"><span class="post-toc-text">lazy 懒加载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用委托操作-SharedPreferences"><span class="post-toc-text">使用委托操作 SharedPreferences</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单实现一个-KotterKnife"><span class="post-toc-text">简单实现一个 KotterKnife</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现"><span class="post-toc-text">实现</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#小结"><span class="post-toc-text">小结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#委托属性-Delegated-Properties"><span class="post-toc-number">1.</span> <span class="post-toc-text">委托属性(Delegated Properties)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义一个委托"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">定义一个委托</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用定义好的委托属性"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">使用定义好的委托属性</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实例讲解"><span class="post-toc-number">3.</span> <span class="post-toc-text">实例讲解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#lazy-懒加载"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">lazy 懒加载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用委托操作-SharedPreferences"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">使用委托操作 SharedPreferences</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单实现一个-KotterKnife"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">简单实现一个 KotterKnife</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实现"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">实现</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li></ol>
             </nav>
             
         </aside>

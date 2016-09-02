@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。">
-<meta property="og:updated_time" content="2016-09-01T15:17:09.000Z">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Jekyll在Github-Pages上搭建个人博客">
 <meta name="twitter:description" content="我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。">
@@ -38,10 +38,10 @@
   </a>
   <div class="brand-wrap">
     <div class="brand">
-      <a href="/" class="avatar"><img src="/img/logo.jpg"></a>
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
       <hgroup class="introduce">
         <h5 class="nickname">Loshine</h5>
-        <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
       </hgroup>
     </div>
   </div>
@@ -51,7 +51,7 @@
           <li class="waves-block waves-effect">
             <a href="/"  >
               <i class="icon icon-lg icon-home"></i>
-              主页
+              Home
             </a>
           </li>
       
@@ -70,14 +70,14 @@
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="https://github.com/yscoder" target="_blank" >
+            <a href="https://github.com/loshine" target="_blank" >
               <i class="icon icon-lg icon-github"></i>
               Github
             </a>
           </li>
       
           <li class="waves-block waves-effect">
-            <a href="http://www.weibo.com/ysweb" target="_blank" >
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
               <i class="icon icon-lg icon-weibo"></i>
               Weibo
             </a>
@@ -157,7 +157,7 @@
 
             
             <nav class="post-toc-wrap" id="post-toc">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开始"><span class="post-toc-text">开始</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#新建一个仓库"><span class="post-toc-text">新建一个仓库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#clone到本地"><span class="post-toc-text">clone到本地</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#上传页面"><span class="post-toc-text">上传页面</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#build"><span class="post-toc-text">建造</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建本地环境"><span class="post-toc-text">搭建本地环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll的使用"><span class="post-toc-text">Jekyll的使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll目录解析"><span class="post-toc-text">Jekyll目录解析</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#write blog"><span class="post-toc-text">写博客</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#装修"><span class="post-toc-text">装修</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用模板"><span class="post-toc-text">使用模板</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义样式"><span class="post-toc-text">自定义样式</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定制"><span class="post-toc-text">定制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用独立域名"><span class="post-toc-text">使用独立域名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加评论功能"><span class="post-toc-text">添加评论功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多说"><span class="post-toc-text">多说</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Disqus"><span class="post-toc-text">Disqus</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开始"><span class="post-toc-number">1.</span> <span class="post-toc-text">开始</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#新建一个仓库"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">新建一个仓库</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#clone到本地"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">clone到本地</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#上传页面"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">上传页面</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#build"><span class="post-toc-number">2.</span> <span class="post-toc-text">建造</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建本地环境"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">搭建本地环境</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll的使用"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Jekyll的使用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jekyll目录解析"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Jekyll目录解析</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#write blog"><span class="post-toc-number">3.</span> <span class="post-toc-text">写博客</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#装修"><span class="post-toc-number">4.</span> <span class="post-toc-text">装修</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用模板"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">使用模板</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#自定义样式"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">自定义样式</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定制"><span class="post-toc-number">5.</span> <span class="post-toc-text">定制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用独立域名"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">使用独立域名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#添加评论功能"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">添加评论功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多说"><span class="post-toc-number">5.2.1.</span> <span class="post-toc-text">多说</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Disqus"><span class="post-toc-number">5.2.2.</span> <span class="post-toc-text">Disqus</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">6.</span> <span class="post-toc-text">参考</span></a></li></ol>
             </nav>
             
         </aside>
