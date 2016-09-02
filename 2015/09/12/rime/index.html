@@ -1,4 +1,173 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="描述"><title>打磨真正属于自己的输入法-RIME | 饭窝</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">打磨真正属于自己的输入法-RIME</h1><a id="logo" href="/.">饭窝</a><p class="description">活捉一只 Android 狗</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">打磨真正属于自己的输入法-RIME</h1><div class="post-meta">Sep 12, 2015<span> | </span><span class="category"><a href="/categories/技术/">技术</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2015/09/12/rime/" href="/2015/09/12/rime/#disqus_thread" class="disqus-comment-count"></a><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义"><span class="toc-number">4.</span> <span class="toc-text">自定义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#输入方案"><span class="toc-number">4.1.</span> <span class="toc-text">输入方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外观"><span class="toc-number">4.2.</span> <span class="toc-text">外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主题"><span class="toc-number">4.3.</span> <span class="toc-text">主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生僻字乱码"><span class="toc-number">4.4.</span> <span class="toc-text">生僻字乱码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#根据程序切换中英文"><span class="toc-number">4.5.</span> <span class="toc-text">根据程序切换中英文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#emoji表情以及特殊符号"><span class="toc-number">4.6.</span> <span class="toc-text">emoji表情以及特殊符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步"><span class="toc-number">4.7.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-设定同步位置"><span class="toc-number">4.7.1.</span> <span class="toc-text">1. 设定同步位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-同步标识"><span class="toc-number">4.7.2.</span> <span class="toc-text">2. 同步标识</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我的成品"><span class="toc-number">4.8.</span> <span class="toc-text">我的成品</span></a></li></ol></li></ol></div></div><div class="post-content"><blockquote>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>打磨真正属于自己的输入法-RIME | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="RIME">
+  <meta name="description" content="很久之前就发现了RIME这个输入法，但因为在windows下的种种不便，把玩了一段时间后终于还是将之打入箱底。近期由于换上了mac作为主力开发机，于是又将其从箱底翻出，仔细把玩打磨一段时间之后已经十分跟手了，于是乎在这里记录一下打磨过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打磨真正属于自己的输入法-RIME">
+<meta property="og:url" content="http://loshine.me/2015/09/12/rime/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="很久之前就发现了RIME这个输入法，但因为在windows下的种种不便，把玩了一段时间后终于还是将之打入箱底。近期由于换上了mac作为主力开发机，于是又将其从箱底翻出，仔细把玩打磨一段时间之后已经十分跟手了，于是乎在这里记录一下打磨过程。">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/111.jpg">
+<meta property="og:updated_time" content="2016-09-01T15:17:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打磨真正属于自己的输入法-RIME">
+<meta name="twitter:description" content="很久之前就发现了RIME这个输入法，但因为在windows下的种种不便，把玩了一段时间后终于还是将之打入箱底。近期由于换上了mac作为主力开发机，于是又将其从箱底翻出，仔细把玩打磨一段时间之后已经十分跟手了，于是乎在这里记录一下打磨过程。">
+<meta name="twitter:image" content="http://7xl94a.com1.z0.glb.clouddn.com/111.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:634206017@qq.com" title="634206017@qq.com" class="mail">634206017@qq.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              主页
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/yscoder" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/ysweb" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">打磨真正属于自己的输入法-RIME</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">打磨真正属于自己的输入法-RIME</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2015-09-12T04:59:57.000Z" itemprop="datePublished" class="page-time">
+  2015-09-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-rime" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RIME/">RIME</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#简介"><span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#安装"><span class="post-toc-text">安装</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用"><span class="post-toc-text">使用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#自定义"><span class="post-toc-text">自定义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#输入方案"><span class="post-toc-text">输入方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#外观"><span class="post-toc-text">外观</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#主题"><span class="post-toc-text">主题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#生僻字乱码"><span class="post-toc-text">生僻字乱码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#根据程序切换中英文"><span class="post-toc-text">根据程序切换中英文</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#emoji表情以及特殊符号"><span class="post-toc-text">emoji表情以及特殊符号</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同步"><span class="post-toc-text">同步</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-设定同步位置"><span class="post-toc-text">1. 设定同步位置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-同步标识"><span class="post-toc-text">2. 同步标识</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#我的成品"><span class="post-toc-text">我的成品</span></a></li></ol></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
 <p>很久之前就发现了 RIME 这个输入法，但因为在 windows 下的种种不便，把玩了一段时间后终于还是将之打入箱底。近期由于换上了 mac 作为主力开发机，于是又将其从箱底翻出，仔细把玩打磨一段时间之后已经十分跟手了，于是乎在这里记录一下打磨过程。</p>
 </blockquote>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>RIME，全称是<strong>中州韵输入法引擎</strong>，是由<strong>佛振</strong>先生开发的跨平台开源输入法。</p>
@@ -117,17 +286,99 @@
 <li>installation.yaml</li>
 </ul>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">distribution_code_name:</span> Squirrel</div><div class="line"><span class="attr">distribution_name:</span> <span class="string">"鼠鬚管"</span></div><div class="line"><span class="attr">distribution_version:</span> <span class="number">0.9</span><span class="number">.26</span><span class="number">.1</span></div><div class="line"><span class="attr">install_time:</span> <span class="string">"Mon Aug  3 15:24:12 2015"</span></div><div class="line"><span class="attr">installation_id:</span> <span class="string">"loshine-macbook"</span></div><div class="line"><span class="attr">rime_version:</span> <span class="number">1.2</span><span class="number">.9</span></div><div class="line"><span class="attr">sync_dir:</span> <span class="string">'/Users/Loshine/我的坚果云/RimeSync'</span></div></pre></td></tr></table></figure>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://loshine.me/2015/09/12/rime/" data-id="cis9obs9j000g4q6ek0m7psnr" class="article-share-link">分享到</a><div class="tags"><a href="/tags/RIME/">RIME</a></div><div class="post-nav"><a href="/2015/10/17/implements-parcelable-in-kotlin/" class="pre">Kotlin中实现Parcelable</a><a href="/2015/08/27/volley/" class="next">Android网络通信框架Volley</a></div><div id="disqus_thread"><script>var disqus_shortname = 'loshine';
-var disqus_identifier = '2015/09/12/rime/';
-var disqus_title = '打磨真正属于自己的输入法-RIME';
-var disqus_url = 'http://loshine.me/2015/09/12/rime/';
-(function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//loshine.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://loshine.me"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Android-Studio/" style="font-size: 15px;">Android Studio</a> <a href="/tags/jekyll/" style="font-size: 15px;">jekyll</a> <a href="/tags/github-pages/" style="font-size: 15px;">github-pages</a> <a href="/tags/设计模式/" style="font-size: 15px;">设计模式</a> <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/Volley/" style="font-size: 15px;">Volley</a> <a href="/tags/Kotlin/" style="font-size: 15px;">Kotlin</a> <a href="/tags/RIME/" style="font-size: 15px;">RIME</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/01/android-best-practice-p1-interface-design/">Android开发最佳实践——1.接口设计</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/25/a-universal-solution-of-recyclerview-adapter-notify/">RecyclerView.Adapter：全能notify解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/13/custom-view-attrs/">自定义View之自定义属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/01/night-mode-in-android/">夜间模式初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/22/measure-custom-view-in-android/">Anroid中的自定义View测量</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/01/guide-with-gradual-background/">背景色渐变的引导页</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/use-lambda-in-android/">在Android开发中使用Lambda表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/26/custom-view-in-android/">Anroid中的自定义View绘制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/22/migrate-blog-to-hexo/">博客迁移到 Hexo</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/08/android-databinding-with-kotlin/">Kotlin与DataBinding协作</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//loshine.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">饭窝.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create','UA-75134925-1','auto');ga('send','pageview');
-</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2015/09/12/rime/" target="_blank" rel="external">http://loshine.me/2015/09/12/rime/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/10/17/implements-parcelable-in-kotlin/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Kotlin中实现Parcelable</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/08/27/volley/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android网络通信框架Volley</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
