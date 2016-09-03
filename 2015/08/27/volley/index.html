@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android网络通信框架Volley | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Android,Volley">
+  <meta name="description" content="之前我们在Android应用中的网络通信，一般都是使用AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等。但在 Google I/O 2013上，Google 发布了一个新的网络通信框架——Volley。Volley 适合数据量不大但通信十分频繁的场景，它使得Http通信操作相比以前更加简单、快捷、健壮。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android网络通信框架Volley">
+<meta property="og:url" content="http://loshine.me/2015/08/27/volley/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="之前我们在Android应用中的网络通信，一般都是使用AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等。但在 Google I/O 2013上，Google 发布了一个新的网络通信框架——Volley。Volley 适合数据量不大但通信十分频繁的场景，它使得Http通信操作相比以前更加简单、快捷、健壮。">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android网络通信框架Volley">
+<meta name="twitter:description" content="之前我们在Android应用中的网络通信，一般都是使用AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等。但在 Google I/O 2013上，Google 发布了一个新的网络通信框架——Volley。Volley 适合数据量不大但通信十分频繁的场景，它使得Http通信操作相比以前更加简单、快捷、健壮。">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android网络通信框架Volley</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Android网络通信框架Volley</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2015-08-27T15:37:30.000Z" itemprop="datePublished" class="page-time">
+  2015-08-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-volley" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Volley/">Volley</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Why"><span class="post-toc-number">1.</span> <span class="post-toc-text">Why</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#How"><span class="post-toc-number">2.</span> <span class="post-toc-text">How</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#集成"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">集成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ClearCacheRequest"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">ClearCacheRequest</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ImageRequest"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">ImageRequest</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#JSONRequest"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">JSONRequest</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#StringRequest"><span class="post-toc-number">2.2.4.</span> <span class="post-toc-text">StringRequest</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义Request"><span class="post-toc-number">2.2.5.</span> <span class="post-toc-text">自定义Request</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#与生命周期的联动"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">与生命周期的联动</span></a></li></ol></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>之前我们在Android应用中的网络通信，一般都是使用AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等。但在 Google I/O 2013上，Google 发布了一个新的网络通信框架——Volley。Volley 适合数据量不大但通信十分频繁的场景，它使得Http通信操作相比以前更加简单、快捷、健壮。</p>
+<h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><p>之前从网络下载图片可能要这样：</p>
+<ol>
+<li>在<code>ListAdapter#getView()</code>里开始图像的读取</li>
+<li>通过 AsyncTask 等机制使用 HttpURLConnection 从服务器去的图片资源</li>
+<li>在<code>AsyncTask#onPostExecute()</code>里设置相应 ImageView 的属性</li>
+</ol>
+<p>再有，屏幕旋转的时候，有时候<em>会导致再次从网络取得数据</em>。为了防止不必要的网络访问，可能我们要自己实现 cache。</p>
+<p>还有 ListView 滚动过快时，可能会导致有些网络请求返回数据时早已不需要显示了。</p>
+<p><strong>这些问题使用 Volley 都可以很简单地解决</strong>。</p>
+<p>Volley 提供了如下的便捷功能：</p>
+<ul>
+<li>JSON，图像的异步下载</li>
+<li>网络请求序列</li>
+<li>网络请求优先级处理</li>
+<li>缓存</li>
+<li>多级别取消请求</li>
+<li>和 Activity 生命周期的联动</li>
+</ul>
+<p><strong>人生苦短，快用 Volley！</strong></p>
+<h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><p>三种集成方法，其中后两种都是非官方渠道：</p>
+<ul>
+<li><p>编译源码导入项目</p>
+<ol>
+<li><p>从 Git 库 clone 最新版 </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://android.googlesource.com/platform/frameworks/volley</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译为 jar 包</p>
+</li>
+<li>导入项目</li>
+</ol>
+</li>
+<li><p>Gradle构建（非官方渠道，推荐）</p>
+  <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.mcxiaoke.volley:library:1.0.18'</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Maven构建（非官方渠道）</p>
+  <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mcxiaoke.volley<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>library<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>&#123;latest-version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>具体使用流程如下：</p>
+<ol>
+<li>在 Activity 中构造一个（一个就够了）RequestQueue 请求序列对象</li>
+<li>创建一个 Request 对象（子类实现）</li>
+<li>添加到序列</li>
+<li>开始序列</li>
+</ol>
+<p>在这四步中，我们着重要关注的是第二步，Request 是一个抽象类，我们所以我们要用到它的子类实现，Volley中已经实现了以下几个子类：</p>
+<ul>
+<li>ClearCacheRequest</li>
+<li>ImageRequest</li>
+<li>JSONRequest</li>
+<li>StringRequest</li>
+</ul>
+<p>下面我们就对这几个子类进行介绍以及给出示例</p>
+<h3 id="ClearCacheRequest"><a href="#ClearCacheRequest" class="headerlink" title="ClearCacheRequest"></a>ClearCacheRequest</h3><p>虚构的请求，用于清空已有的缓存文件。</p>
+<p>ClearCacheRequest的优先级很高，为<code>Priority.IMMEDIATE</code>，所以在被添加到 RequestQueue 后能很快执行。并且清空缓存的方法<code>mCache.clear()</code>写在了<code>isCanceled()</code>方法体中，能最早的得到执行。</p>
+<h3 id="ImageRequest"><a href="#ImageRequest" class="headerlink" title="ImageRequest"></a>ImageRequest</h3><p>待完成</p>
+<h3 id="JSONRequest"><a href="#JSONRequest" class="headerlink" title="JSONRequest"></a>JSONRequest</h3><p>JSONRequest 也是一个抽象类，所以我们在使用时要用到它的两个实现子类——JsonObjectRequest 和 JsonArrayRequest。</p>
+<p>JsonObjectRequest 允许上传 JsonObject 数据，并根据请求返回数据。但 JsonArrayRequest 的实现过于简单，不能携带上传 json 数据，只能使用 GET 方式请求网络。</p>
+<h3 id="StringRequest"><a href="#StringRequest" class="headerlink" title="StringRequest"></a>StringRequest</h3><p>StringRequest 是最为常用也是最灵活的 Request 实现。一个简单的 Get 请求获取百度首页的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringRequestActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Volley 请求队列对象</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> RequestQueue mRequestQueue;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_string_request);</div><div class="line">        </div><div class="line">        <span class="comment">// 构造请求队列</span></div><div class="line">        mRequestQueue = Volley.newRequestQueue(context);</div><div class="line">        </div><div class="line">        StringRequest request = <span class="keyword">new</span> StringRequest(<span class="string">"http://www.baidu.com"</span>,</div><div class="line">            <span class="keyword">new</span> Response.Listener&lt;String&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(String response)</span> </span>&#123;</div><div class="line">                    JSONObject jsonObject = JSON.parseObject(response, JSONObject.class);</div><div class="line">                &#125;</div><div class="line">            &#125;,</div><div class="line">             <span class="keyword">new</span> Response.ErrorListener() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError error)</span> </span>&#123;</div><div class="line">                    Log.i(<span class="string">"net error"</span>, error.getLocalizedMessage());</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        mRequestQueue.add(request);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onStop();</div><div class="line">        <span class="comment">// 退出时取消所有网络请求</span></div><div class="line">        mRequestQueue.cancelAll(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="自定义Request"><a href="#自定义Request" class="headerlink" title="自定义Request"></a>自定义Request</h3><p>一个简单的使用 Pull 解析的 XMLRequest</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XMLRequest</span> <span class="keyword">extends</span> <span class="title">Request</span>&lt;<span class="title">XmlPullParser</span>&gt; </span>&#123;  </div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Listener&lt;XmlPullParser&gt; mListener;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XMLRequest</span><span class="params">(<span class="keyword">int</span> method, String url, Listener&lt;XmlPullParser&gt; listener,</span></span></div><div class="line">            ErrorListener errorListener) &#123;  </div><div class="line">        <span class="keyword">super</span>(method, url, errorListener);  </div><div class="line">        mListener = listener;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">XMLRequest</span><span class="params">(String url, Listener&lt;XmlPullParser&gt; listener, ErrorListener errorListener)</span> </span>&#123;  </div><div class="line">        <span class="keyword">this</span>(Method.GET, url, listener, errorListener);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">protected</span> Response&lt;XmlPullParser&gt; <span class="title">parseNetworkResponse</span><span class="params">(NetworkResponse response)</span> </span>&#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            String xmlString = <span class="keyword">new</span> String(response.data,  </div><div class="line">                    HttpHeaderParser.parseCharset(response.headers));  </div><div class="line">            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();</div><div class="line">            XmlPullParser xmlPullParser = factory.newPullParser();</div><div class="line">            xmlPullParser.setInput(<span class="keyword">new</span> StringReader(xmlString));</div><div class="line">            <span class="keyword">return</span> Response.success(xmlPullParser, HttpHeaderParser.parseCacheHeaders(response));</div><div class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</div><div class="line">            <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));  </div><div class="line">        &#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</div><div class="line">            <span class="keyword">return</span> Response.error(<span class="keyword">new</span> ParseError(e));  </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">deliverResponse</span><span class="params">(XmlPullParser response)</span> </span>&#123;  </div><div class="line">        mListener.onResponse(response);</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>parseNetworkResponse()</code>方法中将服务器响应的数据解析成一个字符串，然后设置到XmlPullParser对象中。在<code>deliverResponse()</code>方法中则是将XmlPullParser对象进行回调。</p>
+<h2 id="与生命周期的联动"><a href="#与生命周期的联动" class="headerlink" title="与生命周期的联动"></a>与生命周期的联动</h2><p>当 Activity 里面启动了网络请求，如果这个网络请求还没返回结果的时候，Activity 就被结束了。此时如果继续使用其中的 Context 等会消耗没有必要的系统资源，而且还有可能会导致程序 crash。</p>
+<p>所以在使用 Volley 时，我们应该在 Activity 停止的时候，同时取消所有或部分未完成的网络请求。Volley 里所有的请求结果会返回给主进程，如果在主进程里取消了某些请求，则这些请求将不会被返回给主线程。Volley 支持多种 Request 取消方式。</p>
+<ul>
+<li><p>可以针对某些个 request 做取消操作</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (Request &lt;?&gt; req : mRequestQueue) &#123;</div><div class="line">        req.cancel();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>取消这个队列里的所有请求</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStop();</div><div class="line">    mRequestQueue.cancelAll(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>可以根据 RequestFilter 或者 Tag 来终止某些请求</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onStop();</div><div class="line"></div><div class="line">    <span class="comment">// 根据 RequestFilter</span></div><div class="line">    mRequestQueue.cancelAll(<span class="keyword">new</span> RequestFilter() &#123;&#125;);</div><div class="line">    <span class="comment">// 根据 Tag</span></div><div class="line">    mRequestQueue.cancelAll(<span class="keyword">new</span> Object());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2015/08/27/volley/" target="_blank" rel="external">http://loshine.me/2015/08/27/volley/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/09/12/rime/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">打磨真正属于自己的输入法-RIME</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/08/25/template-method-pattern-in-java/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Java中的模板方法模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java中的模板方法模式 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="设计模式,Java">
+  <meta name="description" content="准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。模版方法模式是基于继承的代码复用的基本技术。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java中的模板方法模式">
+<meta property="og:url" content="http://loshine.me/2015/08/25/template-method-pattern-in-java/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。模版方法模式是基于继承的代码复用的基本技术。">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/123123123.png">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java中的模板方法模式">
+<meta name="twitter:description" content="准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。模版方法模式是基于继承的代码复用的基本技术。">
+<meta name="twitter:image" content="http://7xl94a.com1.z0.glb.clouddn.com/123123123.png">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Java中的模板方法模式</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Java中的模板方法模式</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2015-08-25T05:50:30.000Z" itemprop="datePublished" class="page-time">
+  2015-08-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-template-method-pattern-in-java" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示例代码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">示例代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#在Servlet中的应用"><span class="post-toc-number">2.</span> <span class="post-toc-text">在Servlet中的应用</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。模版方法模式是基于继承的代码复用的基本技术。</p>
+</blockquote>
+<h1 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h1><p>模板方法模式需要开发抽象类和具体子类的设计师之间的协作。一个设计师负责给出一个算法的轮廓和骨架，另一些设计师则负责给出这个算法的各个逻辑步骤。代表这些具体逻辑步骤的方法称做<strong>基本方法</strong>(primitive method)；而将这些基本方法汇总起来的方法叫做<strong>模板方法</strong>(template method)，这个设计模式的名字就是从此而来。</p>
+<p>模板方法所代表的行为称为顶级行为，其逻辑称为顶级逻辑。模板方法模式的静态结构图如下所示：</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/123123123.png" alt=""></p>
+<p>这里涉及到两个角色：</p>
+<p><strong>抽象模板(Abstract Template)角色：</strong></p>
+<ul>
+<li>定义了一个或多个抽象操作，以便让子类实现。这些抽象操作叫做基本操作，它们是一个顶级逻辑的组成步骤。</li>
+<li>定义并实现了一个模板方法。这个模板方法一般是一个具体方法，它给出了一个顶级逻辑的骨架，而逻辑的组成步骤在相应的抽象操作中，推迟到子类实现。顶级逻辑也有可能调用一些具体方法。</li>
+</ul>
+<p><strong>具体模板(Concrete Template)角色：</strong></p>
+<ul>
+<li>实现父类所定义的一个或多个抽象方法，它们是一个顶级逻辑的组成步骤。</li>
+<li>每一个抽象模板角色都可以有任意多个具体模板角色与之对应，而每一个具体模板角色都可以给出这些抽象方法（也就是顶级逻辑的组成步骤）的不同实现，从而使得顶级逻辑的实现各不相同。</li>
+</ul>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p>抽象模板角色类，<code>abstractMethod()</code>、<code>doHookMethod()</code>等基本方法是顶级逻辑的组成步骤，这个顶级逻辑由<code>templateMethod()</code>方法代表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractTemplate</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 模板方法</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">// 调用基本方法</span></div><div class="line">        abstractMethod();</div><div class="line">        doHookMethod();</div><div class="line">        concreteMethod();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 抽象方法，子类必须实现的方法</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 钩子方法，子类可选择是否实现。注意钩子方法一般以 do 开头</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doHookMethod</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 具体方法，由父类实现，子类无法 override</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">concreteMethod</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">// 业务相关的代码</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>具体模板角色类，实现了父类所声明的基本方法，<code>abstractMethod()</code>方法所代表的就是强制子类实现的剩余逻辑，而<code>doHookMethod()</code>方法是可选择实现的逻辑，不是必须实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteTemplate</span> <span class="keyword">extends</span> <span class="title">AbstractTemplate</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">// 基本方法的实现</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 业务相关的代码</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 重写父类的方法</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hookMethod</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">// 业务相关的代码</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>模板方法模式的关键</strong>：<em>子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑</em>。</p>
+<p>每当定义一个新的子类时，不要按照控制流程的思路去想，而应当按照<strong>责任</strong>的思路去想。换言之，应当考虑哪些操作是必须置换掉的，哪些操作是可以置换掉的，以及哪些操作是不可以置换掉的。使用模板模式可以使这些责任变得清晰。</p>
+<h1 id="在Servlet中的应用"><a href="#在Servlet中的应用" class="headerlink" title="在Servlet中的应用"></a>在Servlet中的应用</h1><p>使用过Servlet的人都清楚，除了要在web.xml做相应的配置外，还需继承一个叫HttpServlet的抽象类。HttpService类提供了一个<code>service()</code>方法，这个方法调用七个do方法中的一个或几个，完成对客户端调用的响应。这些do方法需要由HttpServlet的具体子类提供，因此这是典型的<strong>模板方法模式</strong>。下面是<code>service()</code>方法的源代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span></span></div><div class="line">    <span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"> </div><div class="line">    String method = req.getMethod();</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> (method.equals(METHOD_GET)) &#123;</div><div class="line">        <span class="keyword">long</span> lastModified = getLastModified(req);</div><div class="line">        <span class="keyword">if</span> (lastModified == -<span class="number">1</span>) &#123;</div><div class="line">            <span class="comment">// servlet doesn't support if-modified-since, no reason</span></div><div class="line">            <span class="comment">// to go through further expensive logic</span></div><div class="line">            doGet(req, resp);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">long</span> ifModifiedSince = req.getDateHeader(HEADER_IFMODSINCE);</div><div class="line">            <span class="keyword">if</span> (ifModifiedSince &lt; (lastModified / <span class="number">1000</span> * <span class="number">1000</span>)) &#123;</div><div class="line">                <span class="comment">// If the servlet mod time is later, call doGet()</span></div><div class="line">                <span class="comment">// Round down to the nearest second for a proper compare</span></div><div class="line">                <span class="comment">// A ifModifiedSince of -1 will always be less</span></div><div class="line">                maybeSetLastModified(resp, lastModified);</div><div class="line">                doGet(req, resp);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_HEAD)) &#123;</div><div class="line">        <span class="keyword">long</span> lastModified = getLastModified(req);</div><div class="line">        maybeSetLastModified(resp, lastModified);</div><div class="line">        doHead(req, resp);</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_POST)) &#123;</div><div class="line">        doPost(req, resp);</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_PUT)) &#123;</div><div class="line">        doPut(req, resp);       </div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_DELETE)) &#123;</div><div class="line">        doDelete(req, resp);</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_OPTIONS)) &#123;</div><div class="line">        doOptions(req,resp);</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_TRACE)) &#123;</div><div class="line">        doTrace(req,resp);</div><div class="line"> </div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// Note that this means NO servlet supports whatever</span></div><div class="line">        <span class="comment">// method was requested, anywhere on this server.</span></div><div class="line">        <span class="comment">//</span></div><div class="line"> </div><div class="line">        String errMsg = lStrings.getString(<span class="string">"http.method_not_implemented"</span>);</div><div class="line">        Object[] errArgs = <span class="keyword">new</span> Object[<span class="number">1</span>];</div><div class="line">        errArgs[<span class="number">0</span>] = method;</div><div class="line">        errMsg = MessageFormat.format(errMsg, errArgs);</div><div class="line"> </div><div class="line">        resp.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, errMsg);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，这个<code>service()</code>方法也可以被子类置换掉。</p>
+<p>下面给出一个简单的 Servlet 例子：</p>
+<p>TestServlet 类是 HttpServlet 类的子类，并且置换掉了父类的两个方法：<code>doGet()</code>和<code>doPost()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></div><div class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"> </div><div class="line">        System.out.println(<span class="string">"using the GET method"</span>);</div><div class="line"> </div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></div><div class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"> </div><div class="line">        System.out.println(<span class="string">"using the POST method"</span>);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的例子可以看出这是一个典型的模板方法模式。</p>
+<p>HttpServlet 担任抽象模板角色</p>
+<ul>
+<li><strong>模板方法</strong>：由<code>service()</code>方法担任。</li>
+<li><strong>基本方法</strong>：由<code>doPost()</code>、<code>doGet()</code>等方法担任。</li>
+</ul>
+<p>TestServlet 担任具体模板角色</p>
+<ul>
+<li>TestServlet 置换掉了父类 HttpServlet 中七个基本方法中的其中两个，分别是<code>doGet()</code>和<code>doPost()</code>。</li>
+</ul>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2015/08/25/template-method-pattern-in-java/" target="_blank" rel="external">http://loshine.me/2015/08/25/template-method-pattern-in-java/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2015/08/27/volley/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android网络通信框架Volley</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2015/08/22/android-design-support-library/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android Design Support Library</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

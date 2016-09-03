@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>自定义View之自定义属性 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Android">
+  <meta name="description" content="在之前我们学会了自定义 View 的测量和绘制，那么接下来我们需要在布局文件中给它设置一些自定义属性以个性化控件——如我希望第一个该控件是蓝色的，但希望另一个是红色的。这个时候我们就需要在布局文件中定义属性了，本文就记录一下如何获取并使用自定义属性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义View之自定义属性">
+<meta property="og:url" content="http://loshine.me/2016/08/13/custom-view-attrs/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="在之前我们学会了自定义 View 的测量和绘制，那么接下来我们需要在布局文件中给它设置一些自定义属性以个性化控件——如我希望第一个该控件是蓝色的，但希望另一个是红色的。这个时候我们就需要在布局文件中定义属性了，本文就记录一下如何获取并使用自定义属性。">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/blog-attr-circle-1.png">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/custom_attr.png">
+<meta property="og:updated_time" content="2016-09-02T18:54:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义View之自定义属性">
+<meta name="twitter:description" content="在之前我们学会了自定义 View 的测量和绘制，那么接下来我们需要在布局文件中给它设置一些自定义属性以个性化控件——如我希望第一个该控件是蓝色的，但希望另一个是红色的。这个时候我们就需要在布局文件中定义属性了，本文就记录一下如何获取并使用自定义属性。">
+<meta name="twitter:image" content="http://7xl94a.com1.z0.glb.clouddn.com/blog-attr-circle-1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="描述">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/404"  >
+              <i class="icon icon-lg icon-link"></i>
+              测试
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">自定义View之自定义属性</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">自定义View之自定义属性</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2016-08-13T14:32:31.000Z" itemprop="datePublished" class="page-time">
+  2016-08-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-custom-view-attrs" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定义一个控件"><span class="post-toc-number">1.</span> <span class="post-toc-text">定义一个控件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#定义需要的属性"><span class="post-toc-number">2.</span> <span class="post-toc-text">定义需要的属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#声明属性名称"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">声明属性名称</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#获取属性"><span class="post-toc-number">3.</span> <span class="post-toc-text">获取属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造方法"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">构造方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#obtainStyledAttributes"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">obtainStyledAttributes</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#参数解析"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">参数解析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#attrs"><span class="post-toc-number">3.2.1.1.</span> <span class="post-toc-text">attrs</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#AttrbuteSet"><span class="post-toc-number">3.2.1.2.</span> <span class="post-toc-text">AttrbuteSet</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#defStyleAttrs"><span class="post-toc-number">3.2.1.3.</span> <span class="post-toc-text">defStyleAttrs</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#resId-defStyleRes"><span class="post-toc-number">3.2.1.4.</span> <span class="post-toc-text">resId/defStyleRes</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Null"><span class="post-toc-number">3.2.1.5.</span> <span class="post-toc-text">Null</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#四个参数"><span class="post-toc-number">3.2.1.6.</span> <span class="post-toc-text">四个参数</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TypedArray"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">TypedArray</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实例"><span class="post-toc-number">4.</span> <span class="post-toc-text">实例</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考文章"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考文章</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="定义一个控件"><a href="#定义一个控件" class="headerlink" title="定义一个控件"></a>定义一个控件</h1><p>我们先画一个简单的圆形 View，在<code>onDraw</code>中绘制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CircleView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Paint mPaint;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequiresApi</span>(api = Build.VERSION_CODES.LOLLIPOP)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        mPaint = <span class="keyword">new</span> Paint();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, mPaint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在布局文件中使用：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">io.github.loshine.customview.view.CircleView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>然后我们就可以在 preview 窗口中看到效果了</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/blog-attr-circle-1.png" alt=""></p>
+<p>一个很简单的黑色的圆形</p>
+<h1 id="定义需要的属性"><a href="#定义需要的属性" class="headerlink" title="定义需要的属性"></a>定义需要的属性</h1><p>现在我觉得黑色不好看了，我想给它换个颜色，那么一般来说可以用<code>Paint.setColor(int color)</code>来修改为其它的颜色。但这会让所有的 CircleView 都变成另一个颜色。</p>
+<p>但我可能希望在一个 Activity 里的 CircleView 是红色，但在另一个中的是蓝色。</p>
+<p>此时我们就需要给该 View 自定义属性了。</p>
+<p>自定义属性就类似 TextView 的<code>android:text=&quot;xxx&quot;</code>，ImageView 的<code>android:src=&quot;@drawable/xxx&quot;</code>，可以给相同类型的 View 设置不同的属性展示不同的效果。</p>
+<p>这里我们定义一个 color 属性。</p>
+<h2 id="声明属性名称"><a href="#声明属性名称" class="headerlink" title="声明属性名称"></a>声明属性名称</h2><p>在<code>res/values</code>文件夹下新建一个资源文件，叫 attrs.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CircleView"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color"</span> <span class="attr">format</span>=<span class="string">"color"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这样就完成了属性名称的声明。</p>
+<p><code>declare-styleable</code>的 name 可以任意命名，只要不重复即可，但一般我们会使用自定义控件的类名方便管理。<code>attr</code>标签中定义的就是需要自定义的属性名称和类型。</p>
+<p>我们有这几种类型：</p>
+<ul>
+<li>boolean</li>
+<li>color</li>
+<li>dimension</li>
+<li>enum</li>
+<li>flag</li>
+<li>float</li>
+<li>fraction</li>
+<li>integer</li>
+<li>reference</li>
+<li>string</li>
+</ul>
+<p>声明完成之后就可以在代码中根据对应的方法获取布局中使用的自定义属性了。</p>
+<h1 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h1><h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><p>我们在自定义 View 的时候 IDE 通常会提醒我们需要拥有构造函数，然后我们使用其智能提醒会发现有四个构造函数供我们选择：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">View</span><span class="params">(Context context)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">View</span><span class="params">(Context context, AttributeSet attrs)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">View</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span></span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">View</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span></span></div></pre></td></tr></table></figure>
+<p>查看源码注释，我们知道这四个方法分别对应不同方式创建 View：</p>
+<ul>
+<li><code>View(context)</code>：直接在代码中 new 出来</li>
+<li><code>View(context, attrs)</code>：当 View 是从布局文件 inflate 出来的时候会调用这个构造方法，使用默认的 style 和 theme。</li>
+<li><code>View(context, attrs, defStyleAttr)</code>：该方法不会被系统直接调用，我们需要手动调用。该方法相比第二个方法多了一个默认 style 的参数，它的作用就是为 View 提供一个基本的样式。</li>
+<li><code>View(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)</code>：将资源文件中定义的某个样式作为默认样式。</li>
+</ul>
+<p>我们在实现自定义 View 的时候，通常至少有两个构造方法（至于为什么我们后文再说），分别是<code>View(Context context)</code>以及<code>View(Context context, AttrbuteSet attires)</code>，这样我们才可以在 Java 代码中以及在布局文件中（或使用 Inflater）实例化它们。</p>
+<h2 id="obtainStyledAttributes"><a href="#obtainStyledAttributes" class="headerlink" title="obtainStyledAttributes"></a>obtainStyledAttributes</h2><p>看过了 View 的构造方法，我们现在就要在构造方法里获取 View 的参数了。<code>Context</code>这个类为我们提供了以下几个方法来获取属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">obtainAttributes(AttributeSet set, <span class="keyword">int</span>[] attrs) <span class="comment">// 从 layout 设置的属性集中获取 attrs 中的属性</span></div><div class="line">obtainStyledAttributes(<span class="keyword">int</span>[] attrs) <span class="comment">// 从系统主题中获取 attrs 中的属性</span></div><div class="line">obtainStyledAttributes(<span class="keyword">int</span> resId, <span class="keyword">int</span>[] attrs) <span class="comment">// 从资源文件定义的 style 中读取属性</span></div><div class="line">obtainStyledAttributes(AttributeSet set, <span class="keyword">int</span>[] attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes) <span class="comment">// 后面详细说这个方法</span></div></pre></td></tr></table></figure>
+<p>我们了解一下这几个 API 的参数，然后就可以很方便的获取自定义属性了。</p>
+<h3 id="参数解析"><a href="#参数解析" class="headerlink" title="参数解析"></a>参数解析</h3><h4 id="attrs"><a href="#attrs" class="headerlink" title="attrs"></a>attrs</h4><p>就是我们需要获取属性集中的哪些属性，通常我们会定义一个<code>&lt;styleable&gt;</code>来管理所有的<code>&lt;attr&gt;</code>，然后我们就可以用<code>R.styleable.someAttrs</code>来使用这个参数了。</p>
+<h4 id="AttrbuteSet"><a href="#AttrbuteSet" class="headerlink" title="AttrbuteSet"></a>AttrbuteSet</h4><p>即我们在 xml 中定义的属性的集合，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/dial_button"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:text</span>=<span class="string">"@string/dial"</span> /&gt;</div></pre></td></tr></table></figure>
+<p>这里我们的每一条属性都会放到 AttrbuteSet 中去，当然自定义属性也不例外。需要注意的是，<code>style=&quot;@style/somestyle&quot;</code>这样添加的属性也是会放进去的。</p>
+<blockquote>
+<p>这也是我们必须要实现<code>View(Context context, AttrbuteSet attr)</code>的原因，因为我们需要把布局文件中定义的参数传进来处理。</p>
+</blockquote>
+<h4 id="defStyleAttrs"><a href="#defStyleAttrs" class="headerlink" title="defStyleAttrs"></a>defStyleAttrs</h4><p>这是自定义属性中可以让其在 Theme 中配置的关键，使用它作为参数会从当前 Theme 中去获取参数。</p>
+<h4 id="resId-defStyleRes"><a href="#resId-defStyleRes" class="headerlink" title="resId/defStyleRes"></a>resId/defStyleRes</h4><p>直接从资源文件中定义的某个样式中读取。</p>
+<h4 id="Null"><a href="#Null" class="headerlink" title="Null"></a>Null</h4><p>注意到我们有一个方法只需要<code>attrs</code>作为参数，那它的属性从哪里来呢？其实是我们可以直接在 Theme 中指定属性并且用这个方法获取属性。</p>
+<h4 id="四个参数"><a href="#四个参数" class="headerlink" title="四个参数"></a>四个参数</h4><p><code>obtainStyledAttributes(AttributeSet set, int[] attrs, int defStyleAttr, int defStyleRes)</code>这个方法有四个参数，我们获取到的属性可能从四个地方来：布局文件(set), defStyleAttr(主题可配置样式), defStyleRes(默认样式), NULL(主题中直接获取)</p>
+<p>如果一个属性在多个地方都被定义了，那么它们的优先级如下：</p>
+<p><code>set</code>&gt;<code>defStyleAttr</code>&gt;<code>defStyleRes</code>&gt;<code>NULL</code></p>
+<h2 id="TypedArray"><a href="#TypedArray" class="headerlink" title="TypedArray"></a>TypedArray</h2><p>通过<code>obtainStyledAttributes()</code>我们就拿到了 TypedArray，我们需要的属性都存在里面。然后我们可以对应声明的时候的类型，使用对应的<code>getXXX()</code>方法来获取自定义属性，之后我们就可以使用自定义属性来绘图了。</p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><p>我们将上述的圆形控件修改为五种不同颜色的同心圆，然后使用上面的不同定义属性的方式来定义一遍并且使用。</p>
+<p>首先我们的圆形 View 改成这样了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CircleView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Paint mPaint;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mColor1 = Color.BLACK;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mColor2 = Color.BLACK;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mColor3 = Color.BLACK;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mColor4 = Color.BLACK;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mColor5 = Color.BLACK;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleView,</div><div class="line">                defStyleAttr, R.style.default_style);</div><div class="line">        mColor1 = typedArray.getColor(R.styleable.CircleView_circle_color1, Color.BLACK);</div><div class="line">        mColor2 = typedArray.getColor(R.styleable.CircleView_circle_color2, Color.BLACK);</div><div class="line">        mColor3 = typedArray.getColor(R.styleable.CircleView_circle_color3, Color.BLACK);</div><div class="line">        mColor4 = typedArray.getColor(R.styleable.CircleView_circle_color4, Color.BLACK);</div><div class="line">        mColor5 = typedArray.getColor(R.styleable.CircleView_circle_color5, Color.BLACK);</div><div class="line">        typedArray.recycle();</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        mPaint = <span class="keyword">new</span> Paint();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        mPaint.setColor(mColor1);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, mPaint);</div><div class="line">        mPaint.setColor(mColor2);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">80</span>, mPaint);</div><div class="line">        mPaint.setColor(mColor3);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">60</span>, mPaint);</div><div class="line">        mPaint.setColor(mColor4);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">40</span>, mPaint);</div><div class="line">        mPaint.setColor(mColor5);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">20</span>, mPaint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在<code>attrs.xml</code>中如下定义：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CircleView"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- 对应五个同心圆的颜色 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color1"</span> <span class="attr">format</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color2"</span> <span class="attr">format</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color3"</span> <span class="attr">format</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color4"</span> <span class="attr">format</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_color5"</span> <span class="attr">format</span>=<span class="string">"color"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 定义 theme 可配置 style --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"circle_style"</span> <span class="attr">format</span>=<span class="string">"reference"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>然后我们的<code>style.xml</code>中是这样的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- Base application theme. --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="comment">&lt;!-- Customize your theme here. --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimary"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimaryDark"</span>&gt;</span>@color/colorPrimaryDark<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!-- 配置style --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_style"</span>&gt;</span>@style/custom_theme<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- 直接在主题中指定 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color1"</span>&gt;</span>#ffff00ff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color2"</span>&gt;</span>#ffff00ff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color3"</span>&gt;</span>#ffff00ff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color4"</span>&gt;</span>#ffff00ff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color5"</span>&gt;</span>#ffff00ff<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 主题中配置的style --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"custom_theme"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color1"</span>&gt;</span>#ffff0000<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color2"</span>&gt;</span>#ffff0000<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color3"</span>&gt;</span>#ffff0000<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 直接在layout文件中引用的style，最后会被放到set中 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"myStyle"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color1"</span>&gt;</span>#ff00ff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color2"</span>&gt;</span>#ff00ff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"default_style"</span>&gt;</span><span class="xml"></span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color1"</span>&gt;</span>#ffffff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color2"</span>&gt;</span>#ffffff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color3"</span>&gt;</span>#ffffff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"circle_color4"</span>&gt;</span>#ffffff00<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在布局中我们是这样使用的：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">io.github.loshine.customview.view.CircleView</span></span></div><div class="line">    <span class="attr">style</span>=<span class="string">"@style/myStyle"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">app:circle_color1</span>=<span class="string">"#ff00ffff"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>如上配置，我们效果如图所示：</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/custom_attr.png" alt=""></p>
+<p>可以看出我们的 color4 没有起效果，这是因为使用了 defStyle，这个时候默认 Style 就不会起作用了。</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.jianshu.com/p/61b79e7f88fc" target="_blank" rel="external">深入理解Android 自定义attr Style styleable以及其应用</a></p>
+
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2016/08/13/custom-view-attrs/" target="_blank" rel="external">http://loshine.me/2016/08/13/custom-view-attrs/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+    <div class="waves-block waves-effect prev fl">
+      <a href="/2016/08/25/a-universal-solution-of-recyclerview-adapter-notify/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">RecyclerView.Adapter：全能notify解决方案</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2016/06/01/night-mode-in-android/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">夜间模式初探</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
