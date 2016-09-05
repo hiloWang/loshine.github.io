@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://loshine.me/"/>
-  <updated>2016-09-05T16:41:11.000Z</updated>
+  <updated>2016-09-05T17:34:00.000Z</updated>
   <id>http://loshine.me/</id>
   
   <author>
@@ -16,18 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Android开发最佳实践——2.语言选择</title>
+    <title>Android开发最佳实践——2.使用Kotlin开发Android</title>
     <link href="http://loshine.me/2016/09/06/android-best-practice-p2-language/"/>
     <id>http://loshine.me/2016/09/06/android-best-practice-p2-language/</id>
     <published>2016-09-05T16:30:21.000Z</published>
-    <updated>2016-09-05T16:41:11.000Z</updated>
+    <updated>2016-09-05T17:34:00.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="引"><a href="#引" class="headerlink" title="引"></a>引</h1><p>可能有人说了，Android 开发语言还有什么选择呢？不是只有 Java 么？我这里要一本正经脸地告诉大家，能够开发 Android 不止 Java，除了 Java 我们其实还有很多其它语言是可以选择的。</p>
+    <content type="html"><![CDATA[<h1 id="引"><a href="#引" class="headerlink" title="引"></a>引</h1><p>Android 的官方开发语言是 Java，那为什么我们不继续使用 Java 开发 Android 呢？可能有人会说出很多理由，如：</p>
+<ul>
+<li>没有函数式的支持</li>
+<li>Android 上只能用到 Java 6</li>
+<li>令人烦躁的 NullPointException</li>
+<li>……</li>
+</ul>
+<p>但实际上我觉得让我们选择 Kotlin 而不是 Java 的原因只有一个：<em>Kotlin 拥有更高的生产力</em>。</p>
+<p>下面我就介绍一下 Kotlin 这个语言和它的好处，以及如何使用它编写 Android 程序。</p>
+<h1 id="What"><a href="#What" class="headerlink" title="What"></a>What</h1><p><a href="https://kotlinlang.org/" target="_blank" rel="external">Kotlin</a> 是公司 <a href="https://www.jetbrains.com/" target="_blank" rel="external">JetBrains</a> 研发的语言（他们家代表产品有 IntellJ Idea、Android Studio 等）。他们的网站上，他们是这样描述 Kotlin 的：</p>
+<blockquote>
+<p>为 JVM、Android 和浏览器而生的静态编程语言。</p>
+</blockquote>
+<p>相比起其它 JVM 上的语言，它拥有无数的优点：</p>
+<ul>
+<li>为 Java 作扩展而不是重写 Java，所以它的方法数相比 Groovy 和 Scala 少了很多</li>
+<li>和 Java 可以无缝调用，完美利用 JVM 生态</li>
+<li>面向对象和函数式的结合，支持多种范式</li>
+<li>现代化的语法，解决了 Java 无数痛点（如 NullPointException）</li>
+<li>……</li>
+</ul>
 ]]></content>
     
     <summary type="html">
     
-      Java 是 Android 钦定的官方开发语言，但是因为众所周知的原因我们在写 Android 应用的时候只能使用 Java6，其沉闷落后的语法真的让人感觉不到愉悦...
+      &lt;h1 id=&quot;引&quot;&gt;&lt;a href=&quot;#引&quot; class=&quot;headerlink&quot; title=&quot;引&quot;&gt;&lt;/a&gt;引&lt;/h1&gt;&lt;p&gt;Android 的官方开发语言是 Java，那为什么我们不继续使用 Java 开发 Android 呢？可能有人会说出很多理由，如：&lt;/p&gt;
+&lt;ul
     
     </summary>
     
