@@ -18,7 +18,7 @@
 <meta property="og:description" content="在之前我们学会了自定义 View 的测量和绘制，那么接下来我们需要在布局文件中给它设置一些自定义属性以个性化控件——如我希望第一个该控件是蓝色的，但希望另一个是红色的。这个时候我们就需要在布局文件中定义属性了，本文就记录一下如何获取并使用自定义属性。">
 <meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/blog-attr-circle-1.png">
 <meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/custom_attr.png">
-<meta property="og:updated_time" content="2016-10-10T13:33:39.000Z">
+<meta property="og:updated_time" content="2016-10-10T13:56:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义View之自定义属性">
 <meta name="twitter:description" content="在之前我们学会了自定义 View 的测量和绘制，那么接下来我们需要在布局文件中给它设置一些自定义属性以个性化控件——如我希望第一个该控件是蓝色的，但希望另一个是红色的。这个时候我们就需要在布局文件中定义属性了，本文就记录一下如何获取并使用自定义属性。">
@@ -26,7 +26,7 @@
   
     <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
   
-  <meta name="summary" content="描述">
+  <meta name="summary" content="&lt;h1 id=&quot;定义一个控件&quot;&gt;&lt;a href=&quot;#定义一个控件&quot; class=&quot;headerlink&quot; title=&quot;定义一个控件&quot;&gt;&lt;/a&gt;定义一个控件&lt;/h1&gt;&lt;p&gt;我们先画一个简单的圆形 View，在&lt;code&gt;onDraw&lt;/code&gt;中绘制。&lt;/p&gt;">
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -86,13 +86,6 @@
             </a>
           </li>
       
-          <li class="waves-block waves-effect">
-            <a href="/404"  >
-              <i class="icon icon-lg icon-link"></i>
-              测试
-            </a>
-          </li>
-      
     </ul>
 
     <footer class="footer">
@@ -126,6 +119,10 @@
         </div>
         
         
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
 <header class="content-header">
@@ -157,6 +154,43 @@
         <aside class="post-widget" id="post-widget">
 
             
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
 
             
             <nav class="post-toc-wrap" id="post-toc">
@@ -169,6 +203,7 @@
 
             <div class="post-content" id="post-content" itemprop="postContent">
             <h1 id="定义一个控件"><a href="#定义一个控件" class="headerlink" title="定义一个控件"></a>定义一个控件</h1><p>我们先画一个简单的圆形 View，在<code>onDraw</code>中绘制。</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CircleView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Paint mPaint;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@RequiresApi</span>(api = Build.VERSION_CODES.LOLLIPOP)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CircleView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr, <span class="keyword">int</span> defStyleRes)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr, defStyleRes);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        mPaint = <span class="keyword">new</span> Paint();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        canvas.drawCircle(<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, mPaint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后在布局文件中使用：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">io.github.loshine.customview.view.CircleView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</div></pre></td></tr></table></figure>
@@ -239,6 +274,9 @@
 <p>可以看出我们的 color4 没有起效果，这是因为使用了 defStyle，这个时候默认 Style 就不会起作用了。</p>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a href="http://www.jianshu.com/p/61b79e7f88fc" target="_blank" rel="external">深入理解Android 自定义attr Style styleable以及其应用</a></p>
 
+
+            
+            
             <blockquote>
                 <p>
                 本文地址：
@@ -297,6 +335,52 @@
   </main>
 <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "自定义View之自定义属性",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://loshine.me/2016/08/13/custom-view-attrs/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
 
 
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>

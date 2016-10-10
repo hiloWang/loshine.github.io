@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2016/03/08/android-databinding-with-kotlin/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="DataBinding 是 Google 爹地为我们这群苦逼的 Android 开发者推出的 MVVM 框架。本文解决 Kotlin 和 DataBindin 共用时报错的问题。">
-<meta property="og:updated_time" content="2016-10-10T13:33:39.000Z">
+<meta property="og:updated_time" content="2016-10-10T13:46:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin与DataBinding协作">
 <meta name="twitter:description" content="DataBinding 是 Google 爹地为我们这群苦逼的 Android 开发者推出的 MVVM 框架。本文解决 Kotlin 和 DataBindin 共用时报错的问题。">
@@ -83,13 +83,6 @@
             </a>
           </li>
       
-          <li class="waves-block waves-effect">
-            <a href="/404"  >
-              <i class="icon icon-lg icon-link"></i>
-              测试
-            </a>
-          </li>
-      
     </ul>
 
     <footer class="footer">
@@ -123,6 +116,10 @@
         </div>
         
         
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
 <header class="content-header">
@@ -154,6 +151,43 @@
         <aside class="post-widget" id="post-widget">
 
             
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
 
             
             <nav class="post-toc-wrap" id="post-toc">
@@ -168,6 +202,9 @@
             <p>DataBinding 是 Google 爹地为我们这群苦逼的 Android 开发者推出的 MVVM 框架。本文解决 Kotlin 和 DataBindin 共用时报错的问题。</p>
 <h1 id="如下修改即可"><a href="#如下修改即可" class="headerlink" title="如下修改即可"></a>如下修改即可</h1><p>app 的 build.gradle 中添加如下部分</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	kapt <span class="string">'com.android.databinding:compiler:1.0-rc5'</span><span class="comment">//改为对应版本</span></div><div class="line">&#125;</div><div class="line">kapt &#123;</div><div class="line">	generateStubs = <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+            
+            
             <blockquote>
                 <p>
                 本文地址：
@@ -226,6 +263,52 @@
   </main>
 <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Kotlin与DataBinding协作",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://loshine.me/2016/03/08/android-databinding-with-kotlin/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
 
 
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>

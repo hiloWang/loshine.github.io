@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2015/10/17/implements-parcelable-in-kotlin/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="在 Android中，如果需要序列化对象可以选择实现 Serializable 或 Parceable，如果是在使用内存的情况下，Parcelable 的效率比 Serializable 高">
-<meta property="og:updated_time" content="2016-10-10T13:33:39.000Z">
+<meta property="og:updated_time" content="2016-10-10T13:46:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin中实现Parcelable">
 <meta name="twitter:description" content="在 Android中，如果需要序列化对象可以选择实现 Serializable 或 Parceable，如果是在使用内存的情况下，Parcelable 的效率比 Serializable 高">
@@ -83,13 +83,6 @@
             </a>
           </li>
       
-          <li class="waves-block waves-effect">
-            <a href="/404"  >
-              <i class="icon icon-lg icon-link"></i>
-              测试
-            </a>
-          </li>
-      
     </ul>
 
     <footer class="footer">
@@ -123,6 +116,10 @@
         </div>
         
         
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
 <header class="content-header">
@@ -152,6 +149,43 @@
     </div>
     <div class="post-body">
         <aside class="post-widget" id="post-widget">
+
+            
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
 
             
 
@@ -216,6 +250,9 @@
 </ul>
 <p>查阅官方文档完成的同时我也学会了新的<del>姿势</del>知识，想一想也有点小激动呢</p>
 
+
+            
+            
             <blockquote>
                 <p>
                 本文地址：
@@ -274,6 +311,52 @@
   </main>
 <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Kotlin中实现Parcelable",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://loshine.me/2015/10/17/implements-parcelable-in-kotlin/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
 
 
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>

@@ -16,7 +16,7 @@
 <meta property="og:url" content="http://loshine.me/2016/04/01/guide-with-gradual-background/index.html">
 <meta property="og:site_name" content="饭窝">
 <meta property="og:description" content="Google 的不少 App 都已经使用了背景色渐变的引导页，我也跟风实现一个">
-<meta property="og:updated_time" content="2016-10-10T13:33:39.000Z">
+<meta property="og:updated_time" content="2016-10-10T13:46:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="背景色渐变的引导页">
 <meta name="twitter:description" content="Google 的不少 App 都已经使用了背景色渐变的引导页，我也跟风实现一个">
@@ -83,13 +83,6 @@
             </a>
           </li>
       
-          <li class="waves-block waves-effect">
-            <a href="/404"  >
-              <i class="icon icon-lg icon-link"></i>
-              测试
-            </a>
-          </li>
-      
     </ul>
 
     <footer class="footer">
@@ -123,6 +116,10 @@
         </div>
         
         
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
     </div>
 </header>
 <header class="content-header">
@@ -154,6 +151,43 @@
         <aside class="post-widget" id="post-widget">
 
             
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
 
             
             <nav class="post-toc-wrap" id="post-toc">
@@ -178,6 +212,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ViewPager</span>.<span class="title">OnPageChangeListener</span> </span>&#123;</div><div class="line"></div><div class="line">    ViewPager mViewPager;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] colors;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> state = ViewPager.SCROLL_STATE_IDLE; <span class="comment">// 初始位于停止滑动状态</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> ArgbEvaluator mArgbEvaluator;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        initColors();</div><div class="line">        initViewPager();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化 ViewPager</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initViewPager</span><span class="params">()</span> </span>&#123;</div><div class="line">        mViewPager = (ViewPager) findViewById(R.id.view_pager);</div><div class="line">        <span class="keyword">if</span> (mViewPager != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// 初始颜色</span></div><div class="line">            mViewPager.setBackgroundColor(colors[<span class="number">0</span>]);</div><div class="line">            mViewPager.setAdapter(<span class="keyword">new</span> FragmentStatePagerAdapter(getSupportFragmentManager()) &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">                    <span class="keyword">return</span> GuideBaseFragment.newInstance(position);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="number">4</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line"></div><div class="line">            mViewPager.addOnPageChangeListener(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 初始化颜色</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initColors</span><span class="params">()</span> </span>&#123;</div><div class="line">        colors = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>];</div><div class="line">        colors[<span class="number">0</span>] = getResources().getColor(R.color.guideBackgroundColor1);</div><div class="line">        colors[<span class="number">1</span>] = getResources().getColor(R.color.guideBackgroundColor2);</div><div class="line">        colors[<span class="number">2</span>] = getResources().getColor(R.color.guideBackgroundColor3);</div><div class="line">        colors[<span class="number">3</span>] = getResources().getColor(R.color.guideBackgroundColor4);</div><div class="line"></div><div class="line">        mArgbEvaluator = <span class="keyword">new</span> ArgbEvaluator();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> positionOffset, <span class="keyword">int</span> positionOffsetPixels)</span> </span>&#123;</div><div class="line">        <span class="comment">// 只要不是滑动停止状态就计算颜色</span></div><div class="line">        <span class="keyword">if</span> (state != ViewPager.SCROLL_STATE_IDLE) &#123;</div><div class="line">            <span class="keyword">if</span> (positionOffset &gt; <span class="number">0</span> &amp;&amp; position &lt; <span class="number">4</span>) &#123;</div><div class="line">                <span class="keyword">int</span> evaluatePreColor = (<span class="keyword">int</span>) mArgbEvaluator</div><div class="line">                        .evaluate(positionOffset, colors[position], colors[position + <span class="number">1</span>]);</div><div class="line">                mViewPager.setBackgroundColor(evaluatePreColor);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (positionOffset &lt; <span class="number">0</span> &amp;&amp; position &gt; <span class="number">0</span>) &#123;</div><div class="line">                <span class="keyword">int</span> evaluateNextColor = (<span class="keyword">int</span>) mArgbEvaluator</div><div class="line">                        .evaluate(-positionOffset, colors[position], colors[position - <span class="number">1</span>]);</div><div class="line">                mViewPager.setBackgroundColor(evaluateNextColor);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageSelected</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPageScrollStateChanged</span><span class="params">(<span class="keyword">int</span> state)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.state = state;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>其实实现方式并不复杂，监听 ViewPager 的滚动然后计算中间值即可，重要的是又学习到酷炫的新东西了。</p>
 
+
+            
+            
             <blockquote>
                 <p>
                 本文地址：
@@ -236,6 +273,52 @@
   </main>
 <div class="mask" id="mask"></div>
 <a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "背景色渐变的引导页",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://loshine.me/2016/04/01/guide-with-gradual-background/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
 
 
 <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
