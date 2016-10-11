@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://loshine.me/"/>
-  <updated>2016-10-10T13:46:44.000Z</updated>
+  <updated>2016-10-11T12:10:14.000Z</updated>
   <id>http://loshine.me/</id>
   
   <author>
@@ -14,6 +14,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>集成友盟分析和推送的一些坑</title>
+    <link href="http://loshine.me/2016/10/11/umeng-analitics-and-push-service/"/>
+    <id>http://loshine.me/2016/10/11/umeng-analitics-and-push-service/</id>
+    <published>2016-10-10T17:22:47.000Z</published>
+    <updated>2016-10-11T12:10:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="集成统计"><a href="#集成统计" class="headerlink" title="集成统计"></a>集成统计</h1><h2 id="获得-Appkey"><a href="#获得-Appkey" class="headerlink" title="获得 Appkey"></a>获得 Appkey</h2><p>在集成友盟的统计 SDK 之前肯定要先注册帐号，添加新应用并获取 Appkey。</p>
+<p><img src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDEvMTcvMTNfNTJfMzBfMjI4X2RldjUucG5nIl1d/dev5.png" alt="app_key"></p>
+<h2 id="导入-SDK"><a href="#导入-SDK" class="headerlink" title="导入 SDK"></a>导入 SDK</h2><p>官网提供了两种导入方式：</p>
+<ol>
+<li>下载集成</li>
+<li>使用 Gradle 集成</li>
+</ol>
+<p>在这里建议使用 Android Studio 并且使用 Gradle 集成，非常简单方便，只需要添加如下依赖即可：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">   <span class="keyword">compile</span> <span class="string">'com.umeng.analytics:analytics:latest.integration'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>latest.integration</code>代表友盟统计的最新版本，笔者使用时最新版本为<code>6.0.0</code></p>
+</blockquote>
+<h2 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h2><p>接下来修改<code>AndroidManifest.xml</code>文件添加权限，填写 <strong>Appkey</strong> 以及填写<strong>渠道 id</strong> ：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest……</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">application</span> ……&gt;</span></div><div class="line">        ……</div><div class="line">        <span class="tag">&lt;<span class="name">activity</span> ……/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:value</span>=<span class="string">"YOUR_APP_KEY"</span> <span class="attr">android:name</span>=<span class="string">"UMENG_APPKEY"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:value</span>=<span class="string">"Channel ID"</span> <span class="attr">android:name</span>=<span class="string">"UMENG_CHANNEL"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span>    </div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上需要把<code>UMENG_APPKEY</code>替换成自己的应用的 <strong>Appkey</strong>，<code>UMENG_CHANNEL</code>替换成对应渠道的渠道号。多渠道打包可以参考美团的多渠道打包方案。</p>
+</blockquote>
+<h2 id="统计页面访问"><a href="#统计页面访问" class="headerlink" title="统计页面访问"></a>统计页面访问</h2><p>我司的应用界面全部由 Fragment 呈现，Activity 只用作管理 Fragment。</p>
+<p>按照文档首先在 Application 类中调用<code>MobclickAgent.openActivityDurationTrack(false)</code> 禁止默认的页面统计方式，这样将不会再自动统计Activity。</p>
+<p>然后封装一下 <strong>BaseActivity</strong> 以统计时长：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        MobclickAgent.onResume(<span class="keyword">this</span>);       <span class="comment">//统计时长</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        MobclickAgent.onPause(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>封装 BaseFragment 以统计具体页面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        <span class="comment">// 统计页面</span></div><div class="line">        MobclickAgent.onPageStart(getPageName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        MobclickAgent.onPageEnd(getPageName()); </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 默认页面名是类名，可以给子类重写</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPageName</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getClass().getName();</div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="帐号统计"><a href="#帐号统计" class="headerlink" title="帐号统计"></a>帐号统计</h2><p>暂时还未使用，之后补充。</p>
+<h2 id="混淆配置"><a href="#混淆配置" class="headerlink" title="混淆配置"></a>混淆配置</h2><p>按官方文档配置混淆，以免混淆之后的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-keepclassmembers class * &#123;</div><div class="line">    public &lt;init&gt; (org.json.JSONObject);</div><div class="line">&#125;</div><div class="line"></div><div class="line">-keep public class [您的应用包名].R$*&#123;</div><div class="line">    public static final int *;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-keepclassmembers enum * &#123;</div><div class="line">    public static **[] values();</div><div class="line">    public static ** valueOf(java.lang.String);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用集成测试"><a href="#使用集成测试" class="headerlink" title="使用集成测试"></a>使用集成测试</h2><p>首先在 Application 中打开测试模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MobclickAgent.setDebugMode(BuildConfig.DEBUG);</div></pre></td></tr></table></figure>
+<p>然后<a href="http://mobile.umeng.com/test_devices?ticket=ST-1450072700rPWK4t4q46xw-qpBXzk" target="_blank" rel="external">添加测试设备</a></p>
+<p>这样所有测试数据不会进入应用正式的统计后台，只能在 <strong>管理–集成测试–实时日志</strong> 里查看，测试数据的数据就不会污染生产环境数据了。</p>
+<h1 id="推送服务"><a href="#推送服务" class="headerlink" title="推送服务"></a>推送服务</h1><h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>首先需要<a href="[http://push.umeng.com](http://push.umeng.com/">创建应用</a> )，获取应用对应的 <strong>AppKey</strong> 和 <strong>Umeng Message Secret</strong>。</p>
+<p>因为之前使用了<strong>友盟统计</strong>，我们需要<strong>从已有应用中添加</strong>以保证 <strong>AppKey</strong> 的唯一。</p>
+<h2 id="导入-PushSDK"><a href="#导入-PushSDK" class="headerlink" title="导入 PushSDK"></a>导入 PushSDK</h2><ol>
+<li><p>把下载的 zip 文件解压缩（解压后的文件路径不能有中文）</p>
+</li>
+<li><p>把解压缩后得到的目录下的 PushSDK 当做 Module 导入到自己的工程</p>
+</li>
+<li><p>在之前的<code>AndroidManifest.xml</code>的基础上添加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"UMENG_MESSAGE_SECRET"</span></div><div class="line">    <span class="attr">android:value</span>=<span class="string">"xxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span>/&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑<code>build.gradle</code>添加模块</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':PushSDK'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="权限配置"><a href="#权限配置" class="headerlink" title="权限配置"></a>权限配置</h2><p>若主工程的<code>targetSdkVersion</code>为 23 及以上，需要运行时申请<strong>存储权限</strong>（<code>WRITE_EXTERNAL_STORAGE</code>），否则在 Android 6.0 及以上机型可能出现无法选举宿主的情况。</p>
+<h2 id="注册服务"><a href="#注册服务" class="headerlink" title="注册服务"></a>注册服务</h2><p>在工程的 Application 类的<code>onCreate()</code> 方法中注册推送服务，无论推送是否开启都需要调用此方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">PushAgent mPushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line"><span class="comment">// 注册推送服务，每次调用 register 方法都会回调该接口</span></div><div class="line">mPushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">        <span class="comment">// 注册成功会返回 device token</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在 <strong>BaseActivity</strong> 的<code>onCreate</code>方法中添加如下代码启动<strong>推送统计</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PushAgent.getInstance(context).onAppStart();</div></pre></td></tr></table></figure>
+<h2 id="混淆配置-1"><a href="#混淆配置-1" class="headerlink" title="混淆配置"></a>混淆配置</h2><p>按照文档配置混淆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">-dontwarn com.taobao.**</div><div class="line">-dontwarn anet.channel.**</div><div class="line">-dontwarn anetwork.channel.**</div><div class="line">-dontwarn org.android.**</div><div class="line">-dontwarn org.apache.thrift.**</div><div class="line">-dontwarn com.xiaomi.**</div><div class="line">-dontwarn com.huawei.**</div><div class="line"></div><div class="line">-keepattributes *Annotation*</div><div class="line"></div><div class="line">-keep class com.taobao.** &#123;*;&#125;</div><div class="line">-keep class org.android.** &#123;*;&#125;</div><div class="line">-keep class anet.channel.** &#123;*;&#125;</div><div class="line">-keep class com.umeng.** &#123;*;&#125;</div><div class="line">-keep class com.xiaomi.** &#123;*;&#125;</div><div class="line">-keep class com.huawei.** &#123;*;&#125;</div><div class="line">-keep class org.apache.thrift.** &#123;*;&#125;</div><div class="line"></div><div class="line">-keep public class **.R$*&#123;</div><div class="line">    public static final int *;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="集成推送中的一些坑"><a href="#集成推送中的一些坑" class="headerlink" title="集成推送中的一些坑"></a>集成推送中的一些坑</h2><h3 id="UnsatisfiedLinkError"><a href="#UnsatisfiedLinkError" class="headerlink" title="UnsatisfiedLinkError"></a>UnsatisfiedLinkError</h3><p>按照如上设置之后运行项目发现会如下报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.UnsatisfiedLinkError: dlopen failed: &quot;/data/data/应用包名/files/libtnet-3.1.7bk1.so&quot; is 32-bit instead of 64-bit</div></pre></td></tr></table></figure>
+<p>需要在项目根目录的<code>build.gradle</code>中如下设置解决：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">defaultConfig &#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">       ndk &#123;</div><div class="line">           abiFilters <span class="string">"armeabi"</span>, <span class="string">"x86"</span></div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用-BuildTypes-修改包名的错误"><a href="#使用-BuildTypes-修改包名的错误" class="headerlink" title="使用 BuildTypes 修改包名的错误"></a>使用 BuildTypes 修改包名的错误</h3><p>因为友盟使用 ApplicationId 作为包名利用反射获取资源文件，而当 BuildTypes 中的 ApplicationId 改变了导致应用包名和 Java 包名不一致的时候就会导致错误。此时需要在注册推送服务之前重新设置包名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">PushAgent mPushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line"><span class="comment">// 首先重新设置包名</span></div><div class="line">mPushAgent.setResourcePackageName(R.class.getPackage().getName());</div><div class="line"><span class="comment">// 注册推送服务，每次调用 register 方法都会回调该接口</span></div><div class="line">mPushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">        <span class="comment">// 注册成功会返回 device token</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上就是实际项目中集成友盟统计和推送的方法了，查阅资料解决了一些官方文档没有提及的东西，希望可以给后来者一个参考。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="技术" scheme="http://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Android" scheme="http://loshine.me/tags/Android/"/>
+    
+      <category term="友盟" scheme="http://loshine.me/tags/%E5%8F%8B%E7%9B%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>Android开发最佳实践——2.使用Kotlin开发Android</title>
@@ -1494,112 +1582,6 @@
       <category term="设计模式" scheme="http://loshine.me/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
       <category term="Java" scheme="http://loshine.me/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Jekyll在Github-Pages上搭建个人博客</title>
-    <link href="http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/"/>
-    <id>http://loshine.me/2015/08/17/build-personal-blog-in-github-pages-with-jekyll/</id>
-    <published>2015-08-17T02:12:30.000Z</published>
-    <updated>2016-10-10T13:46:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了<a href="http://azureyu.com/blog/2015/08/15/HowToBulidBlog.html" target="_blank" rel="external">《“授人以渔”的教你搭建个人独立博客》——Azure Yu</a>、<a href="https://help.github.com/articles/using-jekyll-with-pages/" target="_blank" rel="external">《Using Jekyll with Pages》</a>。鄙人于此也作一下<strong>使用Jekyll在Github-Pages上搭建个人博客</strong>的总结，也可以给其他后来者做一些参考。</p>
-<p>本文默认读者已经拥有了Github的帐号，并且对Git的使用较为熟练。如果对Git以及Github不是很了解，可以参考<a href="http://www.imooc.com/learn/390" target="_blank" rel="external">《版本控制入门 – 搬进 Github》</a>。</p>
-<p>在这个过程中可能需要使用到少许的Ruby知识，如果您需要学习，可以看<a href="http://saito.im/slide/ruby-new.html" target="_blank" rel="external">这里</a></p>
-</blockquote>
-<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="新建一个仓库"><a href="#新建一个仓库" class="headerlink" title="新建一个仓库"></a>新建一个仓库</h2><ul>
-<li>如果没有Github帐号，首先<a href="https://github.com/" target="_blank" rel="external">注册一个</a>。</li>
-<li>接下来新建一个仓库</li>
-</ul>
-<p><strong>注：</strong>Repository name(仓库名)必须是 <code>yourusername.github.io</code></p>
-<p>比如我的用户名是loshine，那么我的这个仓库名就是<code>loshine.github.io</code></p>
-<h2 id="clone到本地"><a href="#clone到本地" class="headerlink" title="clone到本地"></a>clone到本地</h2><p>使用Github客户端或者Git命令行工具将这个项目clone到本地。</p>
-<h2 id="上传页面"><a href="#上传页面" class="headerlink" title="上传页面"></a>上传页面</h2><p>之后，新建一个<code>index.html</code>文件，push到对应的<strong>master</strong>分支（推荐官网教程）。等一段时间之后（可以听首歌），网站生效，访问<code>yourusername.github.io</code>，就能看见完整的网页了。</p>
-<h1 id="build">建造</h1>
-
-<h2 id="搭建本地环境"><a href="#搭建本地环境" class="headerlink" title="搭建本地环境"></a>搭建本地环境</h2><p>由于我们使用Jekell来将markdown文件生成博客文章，所以我们需要搭建本地的Jekyll环境。</p>
-<ol>
-<li><strong>Ruby</strong> - Mac已经自带了Ruby，所以无需再次安装。如果是其它系统且没有安装Ruby，请<a href="https://www.ruby-lang.org/en/downloads/" target="_blank" rel="external">安装Ruby环境</a>。</li>
-<li><strong>Bundler</strong> - 打开终端输入<code>gem install bundler</code>以安装。</li>
-<li><strong>github-pages</strong> - 打开终端输入<code>gem install github-pages</code>以安装。</li>
-<li><strong>Jekyll</strong> - 打开终端输入<code>gem install jekyll</code>以安装。</li>
-</ol>
-<p><strong>注</strong>: 如果你在墙内则可能会出现无法安装的问题，可以通过将Gem源更换为<a href="http://ruby.taobao.org/" target="_blank" rel="external">淘宝镜像源</a>解决。</p>
-<h2 id="Jekyll的使用"><a href="#Jekyll的使用" class="headerlink" title="Jekyll的使用"></a>Jekyll的使用</h2><ol>
-<li>在我们之前创建的仓库下新建一个文件，命名为<strong>Gemfile</strong>，并写入<code>gem &#39;github-pages&#39;</code>。</li>
-<li>在仓库目录下打开命令行工具，输入<code>bundle install</code>。</li>
-<li>在命令行工具中输入<code>bundle exec jekyll serve</code>，按提示打开地址，就可以在本地进行查看和调试网站了。</li>
-</ol>
-<h2 id="Jekyll目录解析"><a href="#Jekyll目录解析" class="headerlink" title="Jekyll目录解析"></a>Jekyll目录解析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">|—— _config.yml</div><div class="line">|—— _includes</div><div class="line">    |—— footer.html</div><div class="line">    |—— header.html</div><div class="line">|—— _layouts</div><div class="line">    |—— default.html</div><div class="line">    |—— post.html</div><div class="line">|—— _posts</div><div class="line">    |—— 2015-04-09-welcome-to-jekyll.md</div><div class="line">    |—— 2015-08-17-使用Jekyll在Github-Pages上搭建个人博客.md</div><div class="line">|—— _site</div><div class="line">|—— css</div><div class="line">    |—— *.css</div><div class="line">|—— script</div><div class="line">    |—— *.js</div><div class="line">|—— Gemfile</div><div class="line">|—— Gemfile.lock</div><div class="line">|—— index.html</div></pre></td></tr></table></figure>
-<p>接下来按顺序介绍一下以上文件目录树的每一个文件夹以及文件的作用。</p>
-<ul>
-<li><code>_config.yml</code> 配置文件，你可以在里面配置你博客会用到的常量，比如博客名，邮件</li>
-<li><code>_includes</code> 文章各个部分的html文件，可以在布局中包含这些文件</li>
-<li><code>_layouts</code> 存放模板。就是你网页的布局，主页布局，文章布局。当然不是指CSS那样的布局，是指，你包含哪些基本的内容到页面上。包含的内容就是includes里面的文件。</li>
-<li><code>_posts</code> 存放博客文章</li>
-<li><code>CNAME</code> 域名地址</li>
-<li><code>css</code> 存放博客所用css</li>
-<li><code>script</code> 存放博客所用JavaScript</li>
-<li><code>index.html</code> 博客主页<h1 id="write blog">写博客</h1>
-
-</li>
-</ul>
-<p>博客文章都是用<a href="http://wowubuntu.com/markdown/" target="_blank" rel="external">markdown格式</a>书写，命名格式为<em>时间加标题</em>，形如：<code>2015-08-17-使用Jekyll在Github-Pages上搭建个人博客.md</code></p>
-<p>文章需要在开头位置加入一段特殊的文字，其中定义了使用到的<strong>样式</strong>、<strong>文章标题</strong>、<strong>时间</strong>、<strong>分类</strong>。</p>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">layout: post</div><div class="line">title: "Welcome to Jekyll!"</div><div class="line">date: 2014-01-27 21:57:11</div><div class="line"><span class="section">categories: Blog</span></div><div class="line">---</div></pre></td></tr></table></figure>
-<p>完成了以上的步骤，就可以开始撰写博客了。写完之后记得把它放入<code>_post</code>文件夹中，并同步到Github上哦。</p>
-<h1 id="装修"><a href="#装修" class="headerlink" title="装修"></a>装修</h1><h2 id="使用模板"><a href="#使用模板" class="headerlink" title="使用模板"></a>使用模板</h2><p>之前在<a href="#jekyll dictionary">Jekyll目录解析</a>中我们大致了解了各个目录的结构。如果您是一名资深的前端工程师，那么就可以直接开始编写自己喜欢的样式的博客了。如果您对于前端并不是那么擅长，那么您可以直接在<a href="http://jekyllthemes.org/" target="_blank" rel="external">Jekyll 主题</a>中选择自己喜欢的主题并放入到自己的项目中去。</p>
-<p>以我的博客为例，我选择了<a href="http://jekyllthemes.org/themes/pithy/" target="_blank" rel="external">Pithy</a>主题，将其下载了下来，然后放入了自己的项目中，覆盖已有的文件，然后在终端中输入<code>bundle exec jekyll serve</code>运行jekyll服务器，打开<code>http://localhost:4000</code>就可以查看到效果了。</p>
-<h2 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a>自定义样式</h2><p>如果您不是一名资深的前端工程师但是还是想要自己定义自己博客的样式。那么我推荐您<a href="http://www.runoob.com/" target="_blank" rel="external">Run Noob</a>、<a href="http://www.w3school.com.cn/" target="_blank" rel="external">w3cschool</a>这两个地方学习前端知识。之后您就可以根据自己的需求装点自己的博客了。</p>
-<h1 id="定制"><a href="#定制" class="headerlink" title="定制"></a>定制</h1><h2 id="使用独立域名"><a href="#使用独立域名" class="headerlink" title="使用独立域名"></a>使用独立域名</h2><ul>
-<li>新建一个文件，命名为<strong>CNAME</strong>，然后在里面写入你需要绑定的独立域名就可以了。</li>
-<li>在你的域名服务商处添加解析地址。</li>
-</ul>
-<p>完成以上步骤你就可以使用自己的独立域名了。</p>
-<h2 id="添加评论功能"><a href="#添加评论功能" class="headerlink" title="添加评论功能"></a>添加评论功能</h2><h3 id="多说"><a href="#多说" class="headerlink" title="多说"></a>多说</h3><p>多说评论对国内的社交帐号支持不错，自定义性也很强，是一个不错的选择。</p>
-<ul>
-<li>登录<a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>，创建一个项目，拷贝你的<strong>通用代码</strong>。</li>
-<li>在<code>_include</code>文件夹里新建一个<code>comment.html</code>文件，将通用代码粘贴进去。</li>
-<li>修改<strong>通用代码</strong>中需要配置的地方</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span> <span class="attr">data-thread-key</span>=<span class="string">"请将此处替换成文章在你的站点中的ID"</span></span></div><div class="line">    <span class="attr">data-title</span>=<span class="string">"请替换成文章的标题"</span> <span class="attr">data-url</span>=<span class="string">"请替换成文章的网址"</span>&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span> <span class="attr">data-thread-key</span>=<span class="string">"【 page.id 】"</span></span></div><div class="line">    <span class="attr">data-title</span>=<span class="string">"【 page.title 】"</span> <span class="attr">data-url</span>=<span class="string">"your web site【 page.url 】"</span>&gt;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>注意<code>【】</code>需要替换为<strong>两个大括号</strong>，<code>your web site</code>需替换为<strong>您的域名地址</strong>。</p>
-<ul>
-<li>在<code>_layout</code>中的<code>post.html</code>中的底部加入<code>【% include comment.html %】</code>（【】须替换为{}）</li>
-<li>在<strong>多说</strong>的控制台里你可以设置很多自定义项，如：评论审核、评论显示方式、关键词过滤、主题、自定义CSS等</li>
-</ul>
-<h3 id="Disqus"><a href="#Disqus" class="headerlink" title="Disqus"></a>Disqus</h3><p>Disqus支持使用Disqus、Facebook、Twitter以及Google帐号登录，如果你的博客不是主要面向国内普通用户的话，可以考虑使用Disqus。</p>
-<ul>
-<li><a href="https://disqus.com/" target="_blank" rel="external">注册Disqus</a></li>
-<li>右上角设置项中选择<code>Add Disqus To Site</code>，按步骤走，最后复制生成的<strong>Universal Code</strong></li>
-<li>其它部分类似如上的集成多说操作，<em>但不需要自己修改代码了</em></li>
-<li>Disqus也有控制台可以对评论进行操作</li>
-</ul>
-<p><strong>注意</strong>：Disqus在国内的访问速度可能比较慢，可能需要慎重考虑使用。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><a href="http://azureyu.com/blog/2015/08/15/HowToBulidBlog.html" target="_blank" rel="external">《“授人以渔”的教你搭建个人独立博客》——Azure Yu</a></li>
-<li><a href="https://help.github.com/categories/github-pages-basics/" target="_blank" rel="external">官方文档</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      我的个人博客也在Github-Pages上搭建起来了，其中各个步骤参照了《“授人以渔”的教你搭建个人独立博客》——Azure Yu、《Using Jekyll with Pages》。鄙人于此也作一下使用Jekyll在Github-Pages上搭建个人博客的总结，也可以给其他后来者做一些参考。
-    
-    </summary>
-    
-      <category term="技术" scheme="http://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="jekyll" scheme="http://loshine.me/tags/jekyll/"/>
-    
-      <category term="github" scheme="http://loshine.me/tags/github/"/>
-    
-      <category term="github-pages" scheme="http://loshine.me/tags/github-pages/"/>
     
   </entry>
   

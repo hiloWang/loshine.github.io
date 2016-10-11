@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>集成友盟分析和推送的一些坑 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Android,友盟">
+  <meta name="description" content="最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集成友盟分析和推送的一些坑">
+<meta property="og:url" content="http://loshine.me/2016/10/11/umeng-analitics-and-push-service/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。">
+<meta property="og:image" content="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDEvMTcvMTNfNTJfMzBfMjI4X2RldjUucG5nIl1d/dev5.png">
+<meta property="og:updated_time" content="2016-10-11T12:10:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集成友盟分析和推送的一些坑">
+<meta name="twitter:description" content="最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。">
+<meta name="twitter:image" content="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDEvMTcvMTNfNTJfMzBfMjI4X2RldjUucG5nIl1d/dev5.png">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;blockquote&gt;
+&lt;p&gt;最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。&lt;/p&gt;
+&lt;/blockquote&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">集成友盟分析和推送的一些坑</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">集成友盟分析和推送的一些坑</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2016-10-10T17:22:47.000Z" itemprop="datePublished" class="page-time">
+  2016-10-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-umeng-analitics-and-push-service" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/友盟/">友盟</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#集成统计"><span class="post-toc-text">集成统计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获得-Appkey"><span class="post-toc-text">获得 Appkey</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导入-SDK"><span class="post-toc-text">导入 SDK</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置项目"><span class="post-toc-text">配置项目</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#统计页面访问"><span class="post-toc-text">统计页面访问</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#帐号统计"><span class="post-toc-text">帐号统计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混淆配置"><span class="post-toc-text">混淆配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用集成测试"><span class="post-toc-text">使用集成测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#推送服务"><span class="post-toc-text">推送服务</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#创建应用"><span class="post-toc-text">创建应用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导入-PushSDK"><span class="post-toc-text">导入 PushSDK</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#权限配置"><span class="post-toc-text">权限配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#注册服务"><span class="post-toc-text">注册服务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#混淆配置-1"><span class="post-toc-text">混淆配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#集成推送中的一些坑"><span class="post-toc-text">集成推送中的一些坑</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#UnsatisfiedLinkError"><span class="post-toc-text">UnsatisfiedLinkError</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用-BuildTypes-修改包名的错误"><span class="post-toc-text">使用 BuildTypes 修改包名的错误</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="集成统计"><a href="#集成统计" class="headerlink" title="集成统计"></a>集成统计</h1><h2 id="获得-Appkey"><a href="#获得-Appkey" class="headerlink" title="获得 Appkey"></a>获得 Appkey</h2><p>在集成友盟的统计 SDK 之前肯定要先注册帐号，添加新应用并获取 Appkey。</p>
+<p><img src="http://dev.umeng.com/system/images/W1siZiIsIjIwMTQvMDEvMTcvMTNfNTJfMzBfMjI4X2RldjUucG5nIl1d/dev5.png" alt="app_key"></p>
+<h2 id="导入-SDK"><a href="#导入-SDK" class="headerlink" title="导入 SDK"></a>导入 SDK</h2><p>官网提供了两种导入方式：</p>
+<ol>
+<li>下载集成</li>
+<li>使用 Gradle 集成</li>
+</ol>
+<p>在这里建议使用 Android Studio 并且使用 Gradle 集成，非常简单方便，只需要添加如下依赖即可：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">   <span class="keyword">compile</span> <span class="string">'com.umeng.analytics:analytics:latest.integration'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><code>latest.integration</code>代表友盟统计的最新版本，笔者使用时最新版本为<code>6.0.0</code></p>
+</blockquote>
+<h2 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h2><p>接下来修改<code>AndroidManifest.xml</code>文件添加权限，填写 <strong>Appkey</strong> 以及填写<strong>渠道 id</strong> ：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">manifest……</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">application</span> ……&gt;</span></div><div class="line">        ……</div><div class="line">        <span class="tag">&lt;<span class="name">activity</span> ……/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:value</span>=<span class="string">"YOUR_APP_KEY"</span> <span class="attr">android:name</span>=<span class="string">"UMENG_APPKEY"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:value</span>=<span class="string">"Channel ID"</span> <span class="attr">android:name</span>=<span class="string">"UMENG_CHANNEL"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span>    </div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上需要把<code>UMENG_APPKEY</code>替换成自己的应用的 <strong>Appkey</strong>，<code>UMENG_CHANNEL</code>替换成对应渠道的渠道号。多渠道打包可以参考美团的多渠道打包方案。</p>
+</blockquote>
+<h2 id="统计页面访问"><a href="#统计页面访问" class="headerlink" title="统计页面访问"></a>统计页面访问</h2><p>我司的应用界面全部由 Fragment 呈现，Activity 只用作管理 Fragment。</p>
+<p>按照文档首先在 Application 类中调用<code>MobclickAgent.openActivityDurationTrack(false)</code> 禁止默认的页面统计方式，这样将不会再自动统计Activity。</p>
+<p>然后封装一下 <strong>BaseActivity</strong> 以统计时长：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        MobclickAgent.onResume(<span class="keyword">this</span>);       <span class="comment">//统计时长</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        MobclickAgent.onPause(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>封装 BaseFragment 以统计具体页面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onResume();</div><div class="line">        <span class="comment">// 统计页面</span></div><div class="line">        MobclickAgent.onPageStart(getPageName());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onPause();</div><div class="line">        MobclickAgent.onPageEnd(getPageName()); </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 默认页面名是类名，可以给子类重写</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPageName</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getClass().getName();</div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="帐号统计"><a href="#帐号统计" class="headerlink" title="帐号统计"></a>帐号统计</h2><p>暂时还未使用，之后补充。</p>
+<h2 id="混淆配置"><a href="#混淆配置" class="headerlink" title="混淆配置"></a>混淆配置</h2><p>按官方文档配置混淆，以免混淆之后的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-keepclassmembers class * &#123;</div><div class="line">    public &lt;init&gt; (org.json.JSONObject);</div><div class="line">&#125;</div><div class="line"></div><div class="line">-keep public class [您的应用包名].R$*&#123;</div><div class="line">    public static final int *;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-keepclassmembers enum * &#123;</div><div class="line">    public static **[] values();</div><div class="line">    public static ** valueOf(java.lang.String);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用集成测试"><a href="#使用集成测试" class="headerlink" title="使用集成测试"></a>使用集成测试</h2><p>首先在 Application 中打开测试模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MobclickAgent.setDebugMode(BuildConfig.DEBUG);</div></pre></td></tr></table></figure>
+<p>然后<a href="http://mobile.umeng.com/test_devices?ticket=ST-1450072700rPWK4t4q46xw-qpBXzk" target="_blank" rel="external">添加测试设备</a></p>
+<p>这样所有测试数据不会进入应用正式的统计后台，只能在 <strong>管理–集成测试–实时日志</strong> 里查看，测试数据的数据就不会污染生产环境数据了。</p>
+<h1 id="推送服务"><a href="#推送服务" class="headerlink" title="推送服务"></a>推送服务</h1><h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>首先需要<a href="[http://push.umeng.com](http://push.umeng.com/">创建应用</a> )，获取应用对应的 <strong>AppKey</strong> 和 <strong>Umeng Message Secret</strong>。</p>
+<p>因为之前使用了<strong>友盟统计</strong>，我们需要<strong>从已有应用中添加</strong>以保证 <strong>AppKey</strong> 的唯一。</p>
+<h2 id="导入-PushSDK"><a href="#导入-PushSDK" class="headerlink" title="导入 PushSDK"></a>导入 PushSDK</h2><ol>
+<li><p>把下载的 zip 文件解压缩（解压后的文件路径不能有中文）</p>
+</li>
+<li><p>把解压缩后得到的目录下的 PushSDK 当做 Module 导入到自己的工程</p>
+</li>
+<li><p>在之前的<code>AndroidManifest.xml</code>的基础上添加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta-data</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"UMENG_MESSAGE_SECRET"</span></div><div class="line">    <span class="attr">android:value</span>=<span class="string">"xxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span>/&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>编辑<code>build.gradle</code>添加模块</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    <span class="keyword">compile</span> <span class="keyword">project</span>(<span class="string">':PushSDK'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="权限配置"><a href="#权限配置" class="headerlink" title="权限配置"></a>权限配置</h2><p>若主工程的<code>targetSdkVersion</code>为 23 及以上，需要运行时申请<strong>存储权限</strong>（<code>WRITE_EXTERNAL_STORAGE</code>），否则在 Android 6.0 及以上机型可能出现无法选举宿主的情况。</p>
+<h2 id="注册服务"><a href="#注册服务" class="headerlink" title="注册服务"></a>注册服务</h2><p>在工程的 Application 类的<code>onCreate()</code> 方法中注册推送服务，无论推送是否开启都需要调用此方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">PushAgent mPushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line"><span class="comment">// 注册推送服务，每次调用 register 方法都会回调该接口</span></div><div class="line">mPushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">        <span class="comment">// 注册成功会返回 device token</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在 <strong>BaseActivity</strong> 的<code>onCreate</code>方法中添加如下代码启动<strong>推送统计</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PushAgent.getInstance(context).onAppStart();</div></pre></td></tr></table></figure>
+<h2 id="混淆配置-1"><a href="#混淆配置-1" class="headerlink" title="混淆配置"></a>混淆配置</h2><p>按照文档配置混淆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">-dontwarn com.taobao.**</div><div class="line">-dontwarn anet.channel.**</div><div class="line">-dontwarn anetwork.channel.**</div><div class="line">-dontwarn org.android.**</div><div class="line">-dontwarn org.apache.thrift.**</div><div class="line">-dontwarn com.xiaomi.**</div><div class="line">-dontwarn com.huawei.**</div><div class="line"></div><div class="line">-keepattributes *Annotation*</div><div class="line"></div><div class="line">-keep class com.taobao.** &#123;*;&#125;</div><div class="line">-keep class org.android.** &#123;*;&#125;</div><div class="line">-keep class anet.channel.** &#123;*;&#125;</div><div class="line">-keep class com.umeng.** &#123;*;&#125;</div><div class="line">-keep class com.xiaomi.** &#123;*;&#125;</div><div class="line">-keep class com.huawei.** &#123;*;&#125;</div><div class="line">-keep class org.apache.thrift.** &#123;*;&#125;</div><div class="line"></div><div class="line">-keep public class **.R$*&#123;</div><div class="line">    public static final int *;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="集成推送中的一些坑"><a href="#集成推送中的一些坑" class="headerlink" title="集成推送中的一些坑"></a>集成推送中的一些坑</h2><h3 id="UnsatisfiedLinkError"><a href="#UnsatisfiedLinkError" class="headerlink" title="UnsatisfiedLinkError"></a>UnsatisfiedLinkError</h3><p>按照如上设置之后运行项目发现会如下报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.UnsatisfiedLinkError: dlopen failed: &quot;/data/data/应用包名/files/libtnet-3.1.7bk1.so&quot; is 32-bit instead of 64-bit</div></pre></td></tr></table></figure>
+<p>需要在项目根目录的<code>build.gradle</code>中如下设置解决：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">defaultConfig &#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">       ndk &#123;</div><div class="line">           abiFilters <span class="string">"armeabi"</span>, <span class="string">"x86"</span></div><div class="line">       &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用-BuildTypes-修改包名的错误"><a href="#使用-BuildTypes-修改包名的错误" class="headerlink" title="使用 BuildTypes 修改包名的错误"></a>使用 BuildTypes 修改包名的错误</h3><p>因为友盟使用 ApplicationId 作为包名利用反射获取资源文件，而当 BuildTypes 中的 ApplicationId 改变了导致应用包名和 Java 包名不一致的时候就会导致错误。此时需要在注册推送服务之前重新设置包名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">PushAgent mPushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line"><span class="comment">// 首先重新设置包名</span></div><div class="line">mPushAgent.setResourcePackageName(R.class.getPackage().getName());</div><div class="line"><span class="comment">// 注册推送服务，每次调用 register 方法都会回调该接口</span></div><div class="line">mPushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">        <span class="comment">// 注册成功会返回 device token</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以上就是实际项目中集成友盟统计和推送的方法了，查阅资料解决了一些官方文档没有提及的东西，希望可以给后来者一个参考。</p>
+
+
+            
+            
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="http://loshine.me/2016/10/11/umeng-analitics-and-push-service/" target="_blank" rel="external">http://loshine.me/2016/10/11/umeng-analitics-and-push-service/</a>
+                </p>
+                <footer><cite><a href="http://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2016/09/06/android-best-practice-p2-language/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Android开发最佳实践——2.使用Kotlin开发Android</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "集成友盟分析和推送的一些坑",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "http://loshine.me/2016/10/11/umeng-analitics-and-push-service/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
