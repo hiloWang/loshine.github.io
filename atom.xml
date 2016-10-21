@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://loshine.me/"/>
-  <updated>2016-10-11T13:10:17.000Z</updated>
+  <updated>2016-10-21T17:37:20.000Z</updated>
   <id>http://loshine.me/</id>
   
   <author>
@@ -14,6 +14,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Yarn 下一代 Node 包管理器</title>
+    <link href="http://loshine.me/2016/10/22/yarn-next-generation-node-package-manager/"/>
+    <id>http://loshine.me/2016/10/22/yarn-next-generation-node-package-manager/</id>
+    <published>2016-10-21T17:22:47.000Z</published>
+    <updated>2016-10-21T17:37:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近前端圈子里最热的话题应该就是 Facebook 新出的包管理器—— Yarn 了，它解决了前端工程师构建项目中许多痛点，类比到 Java 圈子大概就是从 Maven 切换到 Gradle 的爽快吧。</p>
+<p>&lt;!— more —&gt;</p>
+<p>截止到10月22日，Yarn 发布短短十多天就已经达到了让人惊叹的 star 数量</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVagw1f90dx6pkytj30mk02qq34.jpg" alt=""></p>
+<p>这成绩简直吓死人了，那么接下来就稍微介绍一下它为什么好，为什么这么多人想要用它替换掉 NPM，以及我们该如何使用它吧。</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>简介还用怎么说呢，你只需要知道它是用来替换 NPM 的就可以了。</p>
+<h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1><h2 id="本地缓存"><a href="#本地缓存" class="headerlink" title="本地缓存"></a>本地缓存</h2><p>类似 <strong>Gradle</strong>，<strong>Yarn</strong> 会把使用过的模块在本地缓存一份，如果下次还要用到相同版本的模块，那么将会直接使用本地的而不是访问网络重新获取一份。</p>
+<p>这个特性碾压 <strong>NPM</strong> 了啊有木有！我之前使用 <strong>NPM</strong> 的时候一直想吐槽这个来着，如果全局安装项目就会依赖环境，如果不全局安装那么每个项目都要重新下载一次包，浪费时间和资源。</p>
+<h2 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h2><p>安装之前会验证文件完整性，所以不用担心安装到损坏的文件啦</p>
+<h2 id="可靠"><a href="#可靠" class="headerlink" title="可靠"></a>可靠</h2><p><strong>Facebook</strong> 都把它用在生产环境中了，<strong>Google</strong> 也要参与维护了，<strong>Github</strong> 上那么多的 star，绝壁可靠了吧</p>
+<h2 id="更优雅的命令"><a href="#更优雅的命令" class="headerlink" title="更优雅的命令"></a>更优雅的命令</h2><p>命令相比起 <strong>NPM</strong> 更容易理解，默认的设置足够贴心，感觉要起飞了</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>说了这么多也心动了，那么我们就开始安装 <strong>Yarn</strong> 吧。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>笔者使用的是 Mac，所以只会介绍 Mac 的安装方法，其它方式请参照 <a href="https://yarnpkg.com/en/docs/install" target="_blank" rel="external">Installation Guide</a></p>
+</blockquote>
+<p>Mac 上有三种安装方式，推荐使用 <strong>Homebrew</strong> 安装。</p>
+<h3 id="Homebrew安装"><a href="#Homebrew安装" class="headerlink" title="Homebrew安装"></a>Homebrew安装</h3><p>输入以下命令即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew update</div><div class="line">brew install yarn</div></pre></td></tr></table></figure>
+<p>如果使用 <strong>NVM</strong> 的话，可以删除依赖中的 node：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew uninstall node</div></pre></td></tr></table></figure>
+<h3 id="安装脚本"><a href="#安装脚本" class="headerlink" title="安装脚本"></a>安装脚本</h3><p>下载官网提供的安装脚本来安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -o- -L https://yarnpkg.com/install.sh | bash</div></pre></td></tr></table></figure>
+<h3 id="npm-安装"><a href="#npm-安装" class="headerlink" title="npm 安装"></a>npm 安装</h3><p>这是最不推荐的一个方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --global yarn</div></pre></td></tr></table></figure>
+<h3 id="验证安装成功"><a href="#验证安装成功" class="headerlink" title="验证安装成功"></a>验证安装成功</h3><p>选择以上三个方法之中的任意一种安装成功之后，运行如下命令检测是否安装成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn --version</div></pre></td></tr></table></figure>
+<p>如果提示没有命令，去修改<code>.zshrc</code>（或<code>.profile</code>, <code>.bashrc</code>）添加如下语句</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:<span class="variable">$HOME</span>/.yarn/bin"</span></div></pre></td></tr></table></figure>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>安装完毕了，那么就要使用它了，下面是一些常用命令和 <strong>NPM</strong> 对应命令的对照表</p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>NPM 命令</th>
+<th>Yarn 命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>安装</td>
+<td>npm install</td>
+<td>yarn</td>
+</tr>
+<tr>
+<td>安装某个包</td>
+<td>npm install xxx —save</td>
+<td>yarn add xxx</td>
+</tr>
+<tr>
+<td>删除某个包</td>
+<td>npm uninstall xxx —save</td>
+<td>yarn remove xxx</td>
+</tr>
+<tr>
+<td>开发模式下安装某个包</td>
+<td>npm install xxx —save-dev</td>
+<td>yarn add xxx —dev</td>
+</tr>
+<tr>
+<td>更新</td>
+<td>npm update —save</td>
+<td>yarn upgrade</td>
+</tr>
+<tr>
+<td>全局安装</td>
+<td>npm install xxx –global</td>
+<td>yarn global add xxx</td>
+</tr>
+</tbody>
+</table>
+<p>还有一些包发布者才会用到的命令就不作详细讲解了</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>yarn 目前来说已经可以做到替换 npm 了，赶紧使用它换取更高的工作效率吧，Enjoy it~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近前端圈子里最热的话题应该就是 Facebook 新出的包管理器—— Yarn 了，它解决了前端工程师构建项目中许多痛点，类比到 Java 圈子大概就是从 Maven 切换到 Gradle 的爽快吧。&lt;/p&gt;
+&lt;p&gt;&amp;lt;!— more —&amp;gt;&lt;/p&gt;
+&lt;p&gt;截止到
+    
+    </summary>
+    
+      <category term="技术" scheme="http://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Node" scheme="http://loshine.me/tags/Node/"/>
+    
+  </entry>
   
   <entry>
     <title>集成友盟分析和推送的一些坑</title>
@@ -1531,57 +1627,6 @@
       <category term="Android Studio" scheme="http://loshine.me/tags/Android-Studio/"/>
     
       <category term="Android" scheme="http://loshine.me/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的单例设计模式</title>
-    <link href="http://loshine.me/2015/08/18/singleton-in-java/"/>
-    <id>http://loshine.me/2015/08/18/singleton-in-java/</id>
-    <published>2015-08-18T03:19:30.000Z</published>
-    <updated>2016-10-10T13:46:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>单例模式确保某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</p>
-</blockquote>
-<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><p>单例模式有以下特点：</p>
-<ol>
-<li>单例类只能有一个实例</li>
-<li>单例类必须自己创建自己的唯一实例</li>
-<li>单例类必须给所有其他对象提供这一实例</li>
-</ol>
-<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="饿汉式"><a href="#饿汉式" class="headerlink" title="饿汉式"></a>饿汉式</h2><p>饿汉式在类创建的同时就已经创建好一个静态的对象供系统使用，以后不再改变，所以天生是线程安全的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 饿汉式，开始就建立一个对象</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton single = <span class="keyword">new</span> Singleton();</div><div class="line">    </div><div class="line">    <span class="comment">// 将构造函数私有，禁止在其它类中创建对象</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> single;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><p>懒汉式则是在调用获取实例对象的方法时检查，若没有对象则创建对象，如果单例对象已经存在则不创建对象直接返回已存在的对象。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">    <span class="comment">// 懒汉式，刚开始不创建对象</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton single=<span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 将构造函数私有，禁止在其它类中创建对象</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 静态工厂方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">         <span class="keyword">if</span> (single == <span class="keyword">null</span>) &#123;</div><div class="line">             single = <span class="keyword">new</span> Singleton();</div><div class="line">         &#125;</div><div class="line">        <span class="keyword">return</span> single;  </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这种懒汉式实现是<strong>非线程安全</strong>的，并发环境下很可能出现多个Singleton实例。若要保证线程安全，我们可以使用如下几种方式</p>
-<ul>
-<li>同步<code>getInstance()</code>方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (single == <span class="keyword">null</span>) &#123;</div><div class="line">        single = <span class="keyword">new</span> Singleton();</div><div class="line">    &#125;    </div><div class="line">    <span class="keyword">return</span> single;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>代码块加锁和双重检查</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">synchronized</span> (Singleton.class) &#123;</div><div class="line">            <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;</div><div class="line">            singleton = <span class="keyword">new</span> Singleton();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> singleton;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>静态内部类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">// 用于封装单例实例的内部类</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyHolder</span> </span>&#123;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 私有构造</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 获取单例实例的方法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> LazyHolder.INSTANCE;</div><div class="line">    &#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其中第三种实现方式最好，避免了加锁的效率问题。但实际开发中饿汉式使用较多。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      单例模式确保某个类只有一个实例，而且自行实例化并向整个系统提供这个实例。
-    
-    </summary>
-    
-      <category term="技术" scheme="http://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="设计模式" scheme="http://loshine.me/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="Java" scheme="http://loshine.me/tags/Java/"/>
     
   </entry>
   
