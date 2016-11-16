@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://loshine.me/"/>
-  <updated>2016-11-16T16:56:21.000Z</updated>
+  <updated>2016-11-16T17:09:19.000Z</updated>
   <id>https://loshine.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://loshine.me/2016/10/22/yarn-next-generation-node-package-manager/"/>
     <id>https://loshine.me/2016/10/22/yarn-next-generation-node-package-manager/</id>
     <published>2016-10-21T17:22:47.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近前端圈子里最热的话题应该就是 Facebook 新出的包管理器—— Yarn 了，它解决了前端工程师构建项目中许多痛点，类比到 Java 圈子大概就是从 Maven 切换到 Gradle 的爽快吧。</p>
 <a id="more"></a>
@@ -114,7 +114,7 @@
     <link href="https://loshine.me/2016/10/11/umeng-analitics-and-push-service/"/>
     <id>https://loshine.me/2016/10/11/umeng-analitics-and-push-service/</id>
     <published>2016-10-10T17:22:47.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>最近公司的项目用到了友盟的统计和推送，在集成的过程中遇到了一点小坑，这里记录一下方便以后查阅。</p>
@@ -202,7 +202,7 @@
     <link href="https://loshine.me/2016/09/06/android-best-practice-p2-language/"/>
     <id>https://loshine.me/2016/09/06/android-best-practice-p2-language/</id>
     <published>2016-09-05T16:30:21.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="引"><a href="#引" class="headerlink" title="引"></a>引</h1><p>Android 的官方开发语言是 Java，那为什么我们不继续使用 Java 开发 Android 呢？可能有人会说出很多理由，如：</p>
 <ul>
@@ -271,7 +271,7 @@
     <link href="https://loshine.me/2016/09/01/android-best-practice-p1-interface-design/"/>
     <id>https://loshine.me/2016/09/01/android-best-practice-p1-interface-design/</id>
     <published>2016-09-01T01:51:21.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>一个项目刚开始的时候，最需要确认的就是接口设计了：数据如何传递，使用什么格式什么协议乃至如何保证安全性。如果一个项目的接口设计不合理——比如没有考虑到安全性，后期为了增加安全验证又要对部分 API 推倒重做，那么前端（泛指 Android、iOS 以及 Web）就必须对整个项目进行改动，甚至可能导致之前发布的版本无法使用的囧事。</p>
 <p>那么本文就谈谈我认为的一个好的接口应该是如何设计的。</p>
@@ -391,7 +391,7 @@
     <link href="https://loshine.me/2016/08/25/a-universal-solution-of-recyclerview-adapter-notify/"/>
     <id>https://loshine.me/2016/08/25/a-universal-solution-of-recyclerview-adapter-notify/</id>
     <published>2016-08-25T01:51:21.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>在之前我们用 ListView 或者 GridView 的时候，通知适配器刷新是这样的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">adapter.notifyDataSetChanged();</div></pre></td></tr></table></figure>
@@ -460,7 +460,7 @@
     <link href="https://loshine.me/2016/08/13/custom-view-attrs/"/>
     <id>https://loshine.me/2016/08/13/custom-view-attrs/</id>
     <published>2016-08-13T14:32:31.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="定义一个控件"><a href="#定义一个控件" class="headerlink" title="定义一个控件"></a>定义一个控件</h1><p>我们先画一个简单的圆形 View，在<code>onDraw</code>中绘制。</p>
 <a id="more"></a>
@@ -553,7 +553,7 @@
     <link href="https://loshine.me/2016/06/01/night-mode-in-android/"/>
     <id>https://loshine.me/2016/06/01/night-mode-in-android/</id>
     <published>2016-06-01T14:19:13.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Android Support Library 23.2.0 版为我们带来了官方的夜间模式，现在我们可以很容易地为 App 开发夜间模式了。</p>
@@ -600,7 +600,7 @@
     <link href="https://loshine.me/2016/04/22/measure-custom-view-in-android/"/>
     <id>https://loshine.me/2016/04/22/measure-custom-view-in-android/</id>
     <published>2016-04-21T16:51:22.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>之前已经讲过了 Android 中 View 的绘制流程，上次主要讲的是<code>onDraw</code>方法，这次主要讲的就是在<code>onMeasure</code>方法中对 View 的大小进行测量。</p>
@@ -664,7 +664,7 @@
     <link href="https://loshine.me/2016/04/01/guide-with-gradual-background/"/>
     <id>https://loshine.me/2016/04/01/guide-with-gradual-background/</id>
     <published>2016-03-31T18:03:33.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="使用什么实现"><a href="#使用什么实现" class="headerlink" title="使用什么实现"></a>使用什么实现</h1><p>还用问么，ViewPager 以及 Fragment 呀，非常简单。</p>
 <h1 id="关键-API"><a href="#关键-API" class="headerlink" title="关键 API"></a>关键 API</h1><p>下面的 API 可以根据初始颜色和结束颜色计算中间值。</p>
@@ -689,9 +689,9 @@
       <category term="技术" scheme="https://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Android" scheme="https://loshine.me/tags/Android/"/>
-    
       <category term="Java" scheme="https://loshine.me/tags/Java/"/>
+    
+      <category term="Android" scheme="https://loshine.me/tags/Android/"/>
     
   </entry>
   
@@ -700,7 +700,7 @@
     <link href="https://loshine.me/2016/03/30/use-lambda-in-android/"/>
     <id>https://loshine.me/2016/03/30/use-lambda-in-android/</id>
     <published>2016-03-30T15:33:11.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>由于三体人对我们的科技封锁，我们无法在 Android 开发中启用 Java 1.8 的重要特性——Lambda 表达式。但现在我们可以通过一些工具启用它，然后使用 Lambda 表达式替换没有什么实际意义的单方法匿名内部类。</p>
@@ -758,9 +758,9 @@
       <category term="技术" scheme="https://loshine.me/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Android" scheme="https://loshine.me/tags/Android/"/>
-    
       <category term="Java" scheme="https://loshine.me/tags/Java/"/>
+    
+      <category term="Android" scheme="https://loshine.me/tags/Android/"/>
     
   </entry>
   
@@ -769,7 +769,7 @@
     <link href="https://loshine.me/2016/03/26/custom-view-in-android/"/>
     <id>https://loshine.me/2016/03/26/custom-view-in-android/</id>
     <published>2016-03-25T16:09:00.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>虽然我们在开发中基本可以用 Android 自带的各种控件实现绝大多数的功能，但难以避免还是有一些需求是自带的控件无法实现的。这个时候我们通常会想到去 Github 上寻找开源控件，但有的东西是有成熟的实现如：ViewPager 的 Indicator。而有的就没那么容易找到了。</p>
@@ -837,7 +837,7 @@
     <link href="https://loshine.me/2016/03/22/migrate-blog-to-hexo/"/>
     <id>https://loshine.me/2016/03/22/migrate-blog-to-hexo/</id>
     <published>2016-03-22T09:09:00.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Github Pages 服务的 Jekyll 升级了，干脆我就趁着这次机会把博客迁移到 Hexo 好了。</p>
@@ -890,7 +890,7 @@
     <link href="https://loshine.me/2016/03/08/android-databinding-with-kotlin/"/>
     <id>https://loshine.me/2016/03/08/android-databinding-with-kotlin/</id>
     <published>2016-03-08T13:23:10.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>DataBinding 是 Google 爹地为我们这群苦逼的 Android 开发者推出的 MVVM 框架。本文解决 Kotlin 和 DataBindin 共用时报错的问题。</p>
 <h1 id="如下修改即可"><a href="#如下修改即可" class="headerlink" title="如下修改即可"></a>如下修改即可</h1><p>app 的 build.gradle 中添加如下部分</p>
@@ -916,7 +916,7 @@
     <link href="https://loshine.me/2016/03/01/delegated-properties-in-kotlin/"/>
     <id>https://loshine.me/2016/03/01/delegated-properties-in-kotlin/</id>
     <published>2016-03-01T01:29:34.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Kotlin 是 Jetbrain 推出的一门运行在 JVM 上的语言，它结合了面向对象以及函数式语言的特性，超甜的语法糖以及来自知名 IDE 大厂 Jetbrain 的出身让它初一面世就广受瞩目，特别是在 Android 开发社区中。它相比起 Java 拥有了许许多多的优秀特性，并且几乎每一个新特性都对应解决了 Java 开发时的痛苦之处，本篇文章主要讲解 Kotlin 中的<strong>委托属性</strong>这一特性。</p>
@@ -989,7 +989,7 @@
     <link href="https://loshine.me/2015/10/17/implements-parcelable-in-kotlin/"/>
     <id>https://loshine.me/2015/10/17/implements-parcelable-in-kotlin/</id>
     <published>2015-10-17T03:03:59.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>在Android中，如果需要序列化对象可以选择实现 <strong>Serializable</strong> 或 <strong>Parceable</strong>。如果是在使用内存的情况下，<strong>Parcelable</strong> 的效率比 <strong>Serializable</strong> 高。但 <strong>Parcelable</strong> 不能被持久化存储，此时还是需要实现 <strong>Serializable</strong>。</p>
@@ -1063,7 +1063,7 @@
     <link href="https://loshine.me/2015/09/12/rime/"/>
     <id>https://loshine.me/2015/09/12/rime/</id>
     <published>2015-09-12T04:59:57.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>很久之前就发现了 RIME 这个输入法，但因为在 windows 下的种种不便，把玩了一段时间后终于还是将之打入箱底。近期由于换上了 mac 作为主力开发机，于是又将其从箱底翻出，仔细把玩打磨一段时间之后已经十分跟手了，于是乎在这里记录一下打磨过程。</p>
@@ -1204,7 +1204,7 @@
     <link href="https://loshine.me/2015/08/27/volley/"/>
     <id>https://loshine.me/2015/08/27/volley/</id>
     <published>2015-08-27T15:37:30.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>之前我们在Android应用中的网络通信，一般都是使用AsyncTaskLoader，HttpURLConnection，AsyncTask，HTTPClient（Apache）等。但在 Google I/O 2013上，Google 发布了一个新的网络通信框架——Volley。Volley 适合数据量不大但通信十分频繁的场景，它使得Http通信操作相比以前更加简单、快捷、健壮。</p>
 <h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><p>之前从网络下载图片可能要这样：</p>
@@ -1305,7 +1305,7 @@
     <link href="https://loshine.me/2015/08/25/template-method-pattern-in-java/"/>
     <id>https://loshine.me/2015/08/25/template-method-pattern-in-java/</id>
     <published>2015-08-25T05:50:30.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>准备一个抽象类，将部分逻辑以具体方法以及具体构造子的形式实现，然后声明一些抽象方法来迫使子类实现剩余逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现。模版方法模式是基于继承的代码复用的基本技术。</p>
@@ -1368,7 +1368,7 @@
     <link href="https://loshine.me/2015/08/22/android-design-support-library/"/>
     <id>https://loshine.me/2015/08/22/android-design-support-library/</id>
     <published>2015-08-22T03:24:30.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>Google 在2015的 IO 大会上，给我们带来了更加详细的 Material Design 设计规范，同时，也给我们带来了全新的 Android Design Support Library，在这个 support 库里面，Google 给我们提供了更加规范的 Material design 设计风格的控件。本文将介绍MD设计风格的兼容库以及它们的用法，也是对自己的学习做一个记录。</p>
@@ -1494,7 +1494,7 @@
     <link href="https://loshine.me/2015/08/20/android-studio-keymap/"/>
     <id>https://loshine.me/2015/08/20/android-studio-keymap/</id>
     <published>2015-08-20T14:31:30.000Z</published>
-    <updated>2016-11-16T16:56:21.000Z</updated>
+    <updated>2016-11-16T17:09:19.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>之前直接把 Android Studio 的 keymap 改为了 Eclipse 模式，但毕竟这样不利于 Android Studio 的学习，所以这里也记录一下 Android Studio 的快捷键，便于以后查看。</p>
