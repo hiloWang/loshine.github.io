@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android开发最佳实践——3.项目架构篇 | 饭窝 | 活捉一只 Android 狗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="theme-color" content="#3F51B5">
+  
+  
+  <meta name="keywords" content="Android">
+  <meta name="description" content="项目的架构是一个项目的基础，其决定了我们项目后期的可扩展性，开发过程中的便捷性等。一个好的项目架构应该是结构清晰，可维护性好且可扩展性强的。这次我们就来探讨一下如何架构一个项目。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发最佳实践——3.项目架构篇">
+<meta property="og:url" content="https://loshine.me/2016/11/17/android-best-practice-p3-project-architechture/index.html">
+<meta property="og:site_name" content="饭窝">
+<meta property="og:description" content="项目的架构是一个项目的基础，其决定了我们项目后期的可扩展性，开发过程中的便捷性等。一个好的项目架构应该是结构清晰，可维护性好且可扩展性强的。这次我们就来探讨一下如何架构一个项目。">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/clean_architecture.jpg">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/flux-arch.png">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/MVP.png">
+<meta property="og:image" content="http://7xl94a.com1.z0.glb.clouddn.com/MVVM.png">
+<meta property="og:updated_time" content="2016-11-17T14:01:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发最佳实践——3.项目架构篇">
+<meta name="twitter:description" content="项目的架构是一个项目的基础，其决定了我们项目后期的可扩展性，开发过程中的便捷性等。一个好的项目架构应该是结构清晰，可维护性好且可扩展性强的。这次我们就来探讨一下如何架构一个项目。">
+<meta name="twitter:image" content="http://7xl94a.com1.z0.glb.clouddn.com/clean_architecture.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="饭窝" type="application/atom+xml">
+  
+  <meta name="summary" content="&lt;p&gt;项目的架构是一个项目的基础，其决定了我们项目后期的可扩展性，开发过程中的便捷性等。一个好的项目架构应该是结构清晰，可维护性好且可扩展性强的。这次我们就来探讨一下如何架构一个项目。&lt;/p&gt;">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="canonical" href="https://loshine.me/2016/11/17/android-best-practice-p3-project-architechture/">
+  <script type="text/javascript">
+        var host = "loshine.me";
+        if ((host == window.location.host) && (window.location.protocol != "https:"))
+            window.location.protocol = "https";
+  </script>
+</head>
+
+<body>
+  <div id="loading" class="active"></div>
+
+  <nav id="menu" class="hide" >
+   <div class="inner flex-row-vertical">
+  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+      <i class="icon icon-lg icon-close"></i>
+  </a>
+  <div class="brand-wrap">
+    <div class="brand">
+      <a href="/" class="avatar"><img src="/assets/img/logo.jpg"></a>
+      <hgroup class="introduce">
+        <h5 class="nickname">Loshine</h5>
+        <a href="mailto:loshine1992@gmail.com" title="loshine1992@gmail.com" class="mail">loshine1992@gmail.com</a>
+      </hgroup>
+    </div>
+  </div>
+  <div class="scroll-wrap flex-col">
+    <ul class="nav">
+      
+          <li class="waves-block waves-effect">
+            <a href="/"  >
+              <i class="icon icon-lg icon-home"></i>
+              Home
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/archives"  >
+              <i class="icon icon-lg icon-archives"></i>
+              Archives
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="/tags"  >
+              <i class="icon icon-lg icon-tags"></i>
+              Tags
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="https://github.com/loshine" target="_blank" >
+              <i class="icon icon-lg icon-github"></i>
+              Github
+            </a>
+          </li>
+      
+          <li class="waves-block waves-effect">
+            <a href="http://www.weibo.com/loshine92" target="_blank" >
+              <i class="icon icon-lg icon-weibo"></i>
+              Weibo
+            </a>
+          </li>
+      
+    </ul>
+
+    <footer class="footer">
+  <p><a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0;vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAMAAABEF7i9AAAAllBMVEUAAAD///+rsapERER3d3eIiIjMzMzu7u4iIiKUmZO6v7rKzsoODg4RERFVVVUNDQ0NDg0PEA8zMzNLTEtbXltmZmZydnF9gn2AgICPkI+ZmZmqqqq7u7vFxsXIzMgNDQwZGRkgICAhISEkJSMnKCcuMC4xMzE5Ozk7PTtBQkFCQkJDQ0Nna2eGhoaHh4ezuLLGysbd3d1wVGpAAAAA4UlEQVR42q2T1xqCMAyFk7QsBQeKA9x7j/d/OSm22CpX0nzcpA1/T05aAOuBVkMAScQFHLnEwoCo2f1TnQIGoVMewjZEjVFN4GH1Ue1Cn2jWqwfsOOj6wDwGvotsl/c8lv7KIq1eLOsT0HMFHMIE/RZyHnlphryT9zyV+8WH5e8yQw3wnQvgAFxPTKUVi555SHR/lOfLMgVTeDlSfN+TaoUsiTyeIm+bCkHvCA2FUKG48LDtYBZBknsYP/G8NTw0gaaHyuQf4H5pecrB/FYCT2sL9zAfy1Xyjou6L8X2W7YcLyBZCRtnq/zfAAAAAElFTkSuQmCC" /></a></p>
+  <p>饭窝 &copy; 2016</p>
+  <p>Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme
+  <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a></p>
+  <a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-2x icon-rss-square"></i></a>
+</footer>
+
+  </div>
+</div>
+
+  </nav>
+  <main id="main">
+    <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android开发最佳实践——3.项目架构篇</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input " autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-share">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header">
+  <div class="container">
+    <h1 class="author">Android开发最佳实践——3.项目架构篇</h1>
+    <h5 class="subtitle">
+        
+            <time datetime="2016-11-17T14:01:25.000Z" itemprop="datePublished" class="page-time">
+  2016-11-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+        
+    </h5>
+  </div>
+</header>
+
+    <div class="container body-wrap">
+      <article id="post-android-best-practice-p3-project-architechture" 
+  class="article article-type-post" itemprop="blogPost">
+    <div class="post-meta flex-row">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+
+    </div>
+    <div class="post-body">
+        <aside class="post-widget" id="post-widget">
+
+            
+            <div class="post-share" id="post-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+            
+
+            
+            <nav class="post-toc-wrap" id="post-toc">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#架构选择"><span class="post-toc-text">架构选择</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Clean-or-Flux"><span class="post-toc-text">Clean or Flux</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Clean-架构"><span class="post-toc-text">Clean 架构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Flux-架构"><span class="post-toc-text">Flux 架构</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP-or-MVVM"><span class="post-toc-text">MVP or MVVM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVP"><span class="post-toc-text">MVP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVVM"><span class="post-toc-text">MVVM</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-text">参考</span></a></li></ol>
+            </nav>
+            
+        </aside>
+
+        <div class="post-main">
+
+            <div class="post-content" id="post-content" itemprop="postContent">
+            <p>项目的架构是一个项目的基础，其决定了我们项目后期的可扩展性，开发过程中的便捷性等。一个好的项目架构应该是结构清晰，可维护性好且可扩展性强的。这次我们就来探讨一下如何架构一个项目。</p>
+<a id="more"></a>
+<h1 id="架构选择"><a href="#架构选择" class="headerlink" title="架构选择"></a>架构选择</h1><p>目前 Android 主流的项目架构的选择其实并不少，我们可以选择看一下 <a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="external">android-architecture</a> 这个项目，这是 Google 提供的架构例子，里面包括了目前 Android 项目的主流架构：</p>
+<ul>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp/" target="_blank" rel="external">todo-mvp/</a> - 基本的 MVP 架构</li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp-loaders/" target="_blank" rel="external">todo-mvp-loaders/</a> - 基于 todo-mvp, 使用 Loaders 获取数据.</li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-databinding/" target="_blank" rel="external">todo-databinding/</a> - 基于 todo-mvp, 使用 Data Binding 库.</li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp-clean/" target="_blank" rel="external">todo-mvp-clean/</a> - 基于 todo-mvp, 使用了 Clean 架构.</li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger/" target="_blank" rel="external">todo-mvp-dagger/</a> - 基于 todo-mvp, 使用 Dagger2 依赖注入 </li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp-contentproviders/" target="_blank" rel="external">todo-mvp-contentproviders/</a> - 基于 todo-mvp-loaders, 使用 Loaders 和 Content Providers 获取数据</li>
+<li><a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp-rxjava/" target="_blank" rel="external">todo-mvp-rxjava/</a> - 基于 todo-mvp, 使用 RxJava 处理并发并抽象数据层.</li>
+<li>……</li>
+</ul>
+<p>另外除了 Google 列出的架构，还有 Facebook 推出的 <a href="http://androidflux.github.io/" target="_blank" rel="external">Flux</a> 架构也值得考虑。</p>
+<p>以上的架构实际上并不是互斥的，在项目中是可以同时用到的。</p>
+<h2 id="Clean-or-Flux"><a href="#Clean-or-Flux" class="headerlink" title="Clean or Flux"></a>Clean or Flux</h2><p>首先我们对比一下 Clean 和 Flux 架构的区别：</p>
+<h3 id="Clean-架构"><a href="#Clean-架构" class="headerlink" title="Clean 架构"></a>Clean 架构</h3><p>Clean 架构把项目按功能分为四层，对应到 Android 项目中从底到上分别是：</p>
+<ul>
+<li>Repository 层(对应图中 Entities，也是 MVVM 中的 Model)</li>
+<li>Domain 层(对应图中 Use Cases，如果没有复杂逻辑是可以省略的)</li>
+<li>Presenter 层(其对应的是 MVVM 中的 ViewModel)</li>
+<li>UI 层（即 MVVM 中的 View）</li>
+</ul>
+<p>其依赖一层一层向上，底部(内部)不会对外部产生依赖。</p>
+<p>如果使用 Clean 架构，我还会选择以下部分实现其它功能：</p>
+<ol>
+<li>Databinding 实现 MVVM(Model-View-ViewModel)</li>
+<li>RxJava 处理并发并抽象数据层</li>
+<li>使用 Dagger2 处理依赖注入</li>
+</ol>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/clean_architecture.jpg" alt="clean_arch"></p>
+<h3 id="Flux-架构"><a href="#Flux-架构" class="headerlink" title="Flux 架构"></a>Flux 架构</h3><p>在 Flux 架构中，数据永远是单向流动的(不包括 Web API 以及 Rest Helper)。当我们操作界面(View)触发一个动作时，ActionCreator 会创建一个对应的 Action，并通过 Dispatcher 发送给所有订阅了这个 Action 的 Store。在 Store 处理完这个 Action 之后就会把相对应的 UI 改变的事件发送给 View 并显示出来。</p>
+<p>下面详细讲一下 Flux 架构中对应的重要成员：</p>
+<p><strong>ActionCreator</strong> 是一个根据语义化的 API 来创建对应的 Action 的类，当 View 触发一个行为的时候就会调用 ActionCreator 对应的方法。</p>
+<p><strong>Action</strong> 是简单的 POJO 类型，它只包含类型和数据，不可被更改，一旦 Action 被创建就会发送到 Dispatcher。</p>
+<p><strong>Dispatcher</strong> 一个 Android 应用只要一个 Dispatcher，它是一个发布-订阅(又称为观察者模式)的实现，它会把 Action 分发到所有注册过的 Store 中，所有注册过的 Store 再根据需要处理 Action 即可。</p>
+<p><strong>Store</strong> Store 有点类似于 MVP 模式中的 Presenter，但它只负责更新 UI 不负责响应 UI 事件。</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/flux-arch.png" alt="flux-arch"></p>
+<p>如果使用 Flux 架构，我还会选择以下部分实现其它功能：</p>
+<ol>
+<li>RxJava 处理并发并抽象数据层</li>
+<li>使用 Dagger2 处理依赖注入</li>
+</ol>
+<p>之后我会再写一篇博文介绍 Flux 架构的详细实现，到时候再详细探讨 Flux 架构。</p>
+<h2 id="MVP-or-MVVM"><a href="#MVP-or-MVVM" class="headerlink" title="MVP or MVVM"></a>MVP or MVVM</h2><p>为什么不用 MVC？它过时了，可以退役了。</p>
+<h3 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h3><p>MVP 相比于 MVC，它从 Controller 层中抽出了一层 Presenter，来负责连接 View 和 Model，这样 View 一旦触发了一个操作，调用 Presenter 的方法去找 Model 获取数据，Presenter 获取到数据处理完毕之后通知 View 更新界面。</p>
+<p>在这个过程中 View 和 Model 不直接发生联系，所有通信通过 Presenter 传递，这样 View 中只处理界面相关的东西，逻辑相关的则交由 Presenter 处理，便于后期维护。</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/MVP.png" alt=""></p>
+<h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3><p>MVVM 其实是对 MVP 的改进，它使用了双向绑定(data-binding)，View 的变化会直接更新到 ViewModel 中，ViewModel 的变化也会直接反应在 View 上，其它和 MVP 没有区别。</p>
+<p>在 Google 推出了 Databinding 库之后使用 MVVM 可以大幅减少代码量，非常方便。</p>
+<p><img src="http://7xl94a.com1.z0.glb.clouddn.com/MVVM.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Clean 或 Flux 架构都是不错的架构模式，Clean 更为常见一些。而 MVP 和 MVVM 模式也是目前主流的选择，当前新开启一个项目的话可以考虑使用它们构建项目架构。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li>文中部分图片和概念出自<a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">《MVC，MVP 和 MVVM 的图示——阮一峰》</a></li>
+<li>Flux 部分参考自<a href="http://androidflux.github.io/" target="_blank" rel="external">AndroidFlux</a></li>
+</ul>
+
+
+            
+            
+            <blockquote>
+                <p>
+                本文地址：
+                <a href="https://loshine.me/2016/11/17/android-best-practice-p3-project-architechture/" target="_blank" rel="external">https://loshine.me/2016/11/17/android-best-practice-p3-project-architechture/</a>
+                </p>
+                <footer><cite><a href="https://loshine.me">@饭窝</a></cite></footer>
+            </blockquote>
+            </div>
+            
+<nav class="post-nav">
+  
+
+  
+    <div class="waves-block waves-effect next fr">
+      <a href="/2016/10/22/yarn-next-generation-node-package-manager/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Yarn 下一代 Node 包管理器</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+            
+            
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'loshine'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+        </div>
+    </div>
+</article>
+    </div>
+  </main>
+<div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+<script>
+var BLOG_SHARE = {
+    title: "Android开发最佳实践——3.项目架构篇",
+    pic: "/assets/img/logo.jpg",
+    summary: document.getElementsByName('summary')[0].content,
+    url: "https://loshine.me/2016/11/17/android-best-practice-p3-project-architechture/index.html"
+};
+</script>
+<div class="global-share" id="global-share">
+    <div class="tit">分享到：</div>
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" href="javascript:;" data-title="微博" data-service="tsina">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns" href="javascript:;" data-title="微信" data-service="weixin">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" href="javascript:;" data-title=" QQ" data-service="cqq">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" href="javascript:;" data-title=" Facebook" data-service="fb">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" href="javascript:;" data-title=" Twitter" data-service="twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="douban share-sns" href="javascript:;" data-title="豆瓣" data-service="douban">
+          豆
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<script type="text/template" id="search-tpl">
+<li class="item">
+    <a href="/{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</script>
+
+<script src="/js/search.js"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
